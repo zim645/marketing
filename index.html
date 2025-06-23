@@ -189,7 +189,7 @@
     <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative">
             <button id="close-login-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
-            
+           
             <div id="login-view">
                 <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
                 <form id="login-form">
@@ -227,14 +227,14 @@
             </div>
         </div>
     </div>
-    
+   
     <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg relative">
             <div class="flex justify-between items-center mb-6">
                 <h2 id="modal-title" class="text-2xl font-bold">Upload a Product</h2>
                 <button id="close-register-modal" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
             </div>
-            
+           
             <div id="product-upload-container">
                 <form id="product-upload-form">
                     <div class="mb-4">
@@ -261,7 +261,7 @@
             </div>
         </div>
     </div>
-    
+   
     <div id="toast"></div>
 
     <script type="module">
@@ -273,7 +273,7 @@
             messagingSenderId: "1234567890",
             appId: "1:1234567890:web:abc123def456"
         };
-            
+           
         const appId = 'marketplace-app';
 
         // Import statements for Firebase services
@@ -386,7 +386,7 @@
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            
+           
             try {
                 await signInWithEmailAndPassword(auth, email, password);
                 showToast("Login successful!");
@@ -401,7 +401,7 @@
             e.preventDefault();
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
-            
+           
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
                 showToast("Account created successfully!");
@@ -427,28 +427,28 @@
         // Product upload form
         productUploadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+           
             const uploadBtn = document.getElementById('upload-product-btn');
             const spinner = document.getElementById('upload-spinner');
             const btnText = document.getElementById('upload-btn-text');
-            
+           
             uploadBtn.disabled = true;
             spinner.classList.remove('hidden');
             btnText.classList.add('hidden');
-            
+           
             try {
                 const user = auth.currentUser;
                 if (!user) throw new Error("You must be logged in to upload products");
-                
+               
                 const imageFile = document.getElementById('product-image').files[0];
                 if (!imageFile) throw new Error("Please select an image");
-                
+               
                 // Upload image to storage
                 const storagePath = `product_images/${user.uid}/${Date.now()}_${imageFile.name}`;
                 const storageRef = ref(storage, storagePath);
                 await uploadBytes(storageRef, imageFile);
                 const imageUrl = await getDownloadURL(storageRef);
-                
+               
                 // Add product to Firestore
                 await addDoc(collection(db, `artifacts/${appId}/public/data/products`), {
                     name: document.getElementById('product-name').value,
@@ -458,7 +458,7 @@
                     sellerId: user.uid,
                     createdAt: serverTimestamp()
                 });
-                
+               
                 showToast("Product uploaded successfully!");
                 productUploadForm.reset();
                 closeAllModals();
@@ -475,7 +475,7 @@
         function listenForProducts() {
             const productsCollectionPath = `artifacts/${appId}/public/data/products`;
             const q = query(collection(db, productsCollectionPath));
-            
+           
             unsubscribeProducts = onSnapshot(q, (querySnapshot) => {
                 const products = [];
                 querySnapshot.forEach((doc) => {
@@ -501,12 +501,12 @@
         function displayProducts(products) {
             loadingSpinner.classList.add('hidden');
             productGrid.innerHTML = '';
-            
+           
             if (products.length === 0) {
                 productGrid.innerHTML = '<p class="col-span-full text-center text-gray-500">No products found</p>';
                 return;
             }
-            
+           
             products.forEach(product => {
                 const productCard = `
                     <div class="bg-white rounded-lg shadow-md overflow-hidden">
