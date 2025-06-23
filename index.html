@@ -250,6 +250,10 @@
                         <input type="number" id="product-price" step="0.01" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div class="mb-4">
+                        <label for="seller-phone-number" class="block text-sm font-medium text-gray-700">Seller Phone Number (e.g., +233241234567)</label>
+                        <input type="tel" id="seller-phone-number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
                         <label for="product-image" class="block text-sm font-medium text-gray-700">Product Image</label>
                         <input type="file" id="product-image" accept="image/*" required class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     </div>
@@ -442,6 +446,8 @@
                
                 const imageFile = document.getElementById('product-image').files[0];
                 if (!imageFile) throw new Error("Please select an image");
+
+                const sellerPhoneNumber = document.getElementById('seller-phone-number').value;
                
                 // Upload image to storage
                 const storagePath = `product_images/${user.uid}/${Date.now()}_${imageFile.name}`;
@@ -456,6 +462,7 @@
                     price: parseFloat(document.getElementById('product-price').value),
                     imageUrl: imageUrl, // Store the image URL
                     sellerId: user.uid,
+                    sellerPhoneNumber: sellerPhoneNumber, // Store the seller's phone number
                     createdAt: serverTimestamp()
                 });
                
@@ -508,6 +515,21 @@
             }
            
             products.forEach(product => {
+                const phoneNumber = product.sellerPhoneNumber || ''; // Get phone number, default to empty string
+                const whatsappLink = `https://wa.me/${phoneNumber.replace(/\+/g, '')}`; // WhatsApp link
+                const callLink = `tel:${phoneNumber}`; // Call link
+
+                const contactButtons = phoneNumber ? `
+                    <div class="flex space-x-2 mt-2">
+                        <a href="${callLink}" class="flex-1 text-center bg-green-500 text-white px-3 py-1 rounded-md text-sm hover:bg-green-600">
+                            <i class="fas fa-phone mr-1"></i> Call
+                        </a>
+                        <a href="${whatsappLink}" target="_blank" class="flex-1 text-center bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600">
+                            <i class="fab fa-whatsapp mr-1"></i> WhatsApp
+                        </a>
+                    </div>
+                ` : '';
+
                 const productCard = `
                     <div class="bg-white rounded-lg shadow-md overflow-hidden">
                         <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-48 object-cover">
@@ -518,7 +540,7 @@
                                 <span class="text-xl font-bold">$${product.price.toFixed(2)}</span>
                                 <button class="bg-blue-600 text-white px-4 py-2 rounded-md">Add to Cart</button>
                             </div>
-                        </div>
+                            ${contactButtons} </div>
                     </div>
                 `;
                 productGrid.insertAdjacentHTML('beforeend', productCard);
@@ -526,12 +548,19 @@
         }
 
         // Search functionality
-        searchButton.addEventListener('click', () => {
+        searchInput.addEventListener('input', () => {
             const searchTerm = searchInput.value.toLowerCase();
             // In a real app, you would filter products here
             // For now, we'll just show a toast
+            // showToast(`Searching for: ${searchTerm}`); // Optional: re-enable for immediate feedback
+        });
+
+        searchButton.addEventListener('click', () => {
+            const searchTerm = searchInput.value.toLowerCase();
             if (searchTerm) {
                 showToast(`Searching for: ${searchTerm}`);
+                // Implement actual search/filter logic here if you store products locally
+                // Or re-fetch from Firestore with a query if needed.
             }
         });
 
