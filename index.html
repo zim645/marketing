@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace - Buy and Sell Anything</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-bg {
+            background-color: #F3F4F6;
+        }
+        /* Custom styles for the notification toast */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            color: white;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        #toast.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        #toast.success {
+            background-color: #28a745; /* Green */
+        }
+        #toast.error {
+            background-color: #dc3545; /* Red */
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 lg:px-6 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-gray-800">MarketPlace</a>
+                <div class="hidden lg:flex items-center space-x-6">
+                    <a href="#" class="text-gray-600 hover:text-gray-900">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900">Shop</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900">Categories</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900">About Us</a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fas fa-shopping-cart"></i></a>
+                    <div id="auth-container">
+                        <a href="#" id="login-btn" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700">Login</a>
+                        <a href="#" id="register-btn" class="hidden md:inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500">Become a Seller</a>
+                    </div>
+                    <div id="user-info" class="hidden items-center">
+                        <span id="user-id-display" class="text-sm text-gray-500 mr-4"></span>
+                        <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-400">Logout</button>
+                    </div>
+                    <button class="lg:hidden" id="mobile-menu-button">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="hidden lg:hidden mt-4" id="mobile-menu">
+                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Home</a>
+                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Shop</a>
+                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Categories</a>
+                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">About Us</a>
+                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Contact</a>
+                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100 md:hidden">Become a Seller</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-bg py-20">
+            <div class="container mx-auto px-4 lg:px-6 text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Find Your Next Treasure</h1>
+                <p class="text-lg text-gray-600 mb-8">Discover unique items from sellers around the world.</p>
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative">
+                        <input type="text" id="search-input" placeholder="Search for products by name or description..." class="w-full py-3 px-5 rounded-full border-2 border-gray-300 focus:outline-none focus:border-blue-500">
+                        <button class="absolute right-0 top-0 mt-2 mr-2 bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-500">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16">
+            <div class="container mx-auto px-4 lg:px-6">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Shop by Category</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
+                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-tshirt"></i></div>
+                        <h3 class="font-semibold">Fashion</h3>
+                    </div>
+                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
+                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-laptop"></i></div>
+                        <h3 class="font-semibold">Electronics</h3>
+                    </div>
+                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
+                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-couch"></i></div>
+                        <h3 class="font-semibold">Home & Garden</h3>
+                    </div>
+                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
+                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-book-open"></i></div>
+                        <h3 class="font-semibold">Books</h3>
+                    </div>
+                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
+                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-car"></i></div>
+                        <h3 class="font-semibold">Motors</h3>
+                    </div>
+                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
+                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-puzzle-piece"></i></div>
+                        <h3 class="font-semibold">Collectibles</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-gray-50 py-16">
+            <div class="container mx-auto px-4 lg:px-6">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Featured Products</h2>
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <div id="loading-spinner" class="col-span-full flex justify-center items-center">
+                        <i class="fas fa-spinner fa-spin text-4xl text-blue-600"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-blue-600 text-white">
+            <div class="container mx-auto px-4 lg:px-6 text-center">
+                <h2 class="text-3xl font-bold mb-4">Start Selling Today</h2>
+                <p class="text-lg mb-8">Join our community of sellers and reach millions of customers.</p>
+                <button id="cta-register-btn" class="bg-white text-blue-600 font-bold px-8 py-3 rounded-full hover:bg-gray-100 transition duration-300">Register Now</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white pt-12">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">MarketPlace</h3>
+                    <p class="text-gray-400">The best place to buy and sell unique items.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 py-6 text-center text-gray-500">
+                <p>&copy; 2025 MarketPlace. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative">
+            <button id="close-login-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            
+            <div id="login-view">
+                <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="login-email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="mb-6">
+                        <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="login-password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition">Login</button>
+                </form>
+                <p class="text-center text-sm text-gray-600 mt-4">
+                    Don't have an account? <button id="switch-to-register" class="font-medium text-blue-600 hover:underline">Register</button>
+                </p>
+            </div>
+
+            <div id="register-view" class="hidden">
+                <h2 class="text-2xl font-bold mb-6 text-center">Create Account</h2>
+                <form id="register-form">
+                    <div class="mb-4">
+                        <label for="register-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="register-email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="mb-6">
+                        <label for="register-password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="register-password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition">Create Account</button>
+                </form>
+                <p class="text-center text-sm text-gray-600 mt-4">
+                    Already have an account? <button id="switch-to-login" class="font-medium text-blue-600 hover:underline">Login</button>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg relative">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modal-title" class="text-2xl font-bold">Upload a Product</h2>
+                <button id="close-register-modal" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            
+            <div id="product-upload-container">
+                <form id="product-upload-form">
+                    <div class="mb-4">
+                        <label for="product-name" class="block text-sm font-medium text-gray-700">Product Name</label>
+                        <input type="text" id="product-name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="product-description" class="block text-sm font-medium text-gray-700">Product Description</label>
+                        <textarea id="product-description" rows="3" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="product-price" class="block text-sm font-medium text-gray-700">Price ($)</label>
+                        <input type="number" id="product-price" step="0.01" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="product-image" class="block text-sm font-medium text-gray-700">Product Image</label>
+                        <input type="file" id="product-image" accept="image/*" required class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                    <button type="submit" id="upload-product-btn" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition disabled:bg-gray-400">
+                        <span id="upload-btn-text">Upload Product</span>
+                        <i id="upload-spinner" class="fas fa-spinner fa-spin hidden"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast"></div>
+
+    <script type="module">
+        const firebaseConfig = {
+            apiKey: "AIzaSyDEMO_ONLY_DEMO",
+            authDomain: "demo-project.firebaseapp.com",
+            projectId: "demo-project",
+            storageBucket: "demo-project.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:1234567890:web:abc123def456"
+        };
+            
+        const appId = 'marketplace-app';
+
+        // Import statements for Firebase services
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // DOM Elements
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const ctaRegisterBtn = document.getElementById('cta-register-btn');
+        const userInfo = document.getElementById('user-info');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginModal = document.getElementById('login-modal');
+        const closeLoginModal = document.getElementById('close-login-modal');
+        const registerModal = document.getElementById('register-modal');
+        const closeRegisterModal = document.getElementById('close-register-modal');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const switchToRegister = document.getElementById('switch-to-register');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const loginView = document.getElementById('login-view');
+        const registerView = document.getElementById('register-view');
+        const productUploadForm = document.getElementById('product-upload-form');
+        const productGrid = document.getElementById('product-grid');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.querySelector('.relative button');
+
+        // Mobile menu toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Modal toggle functions
+        function showLoginModal() {
+            loginModal.classList.remove('hidden');
+            loginView.classList.remove('hidden');
+            registerView.classList.add('hidden');
+        }
+
+        function showRegisterModal() {
+            registerModal.classList.remove('hidden');
+        }
+
+        function closeAllModals() {
+            loginModal.classList.add('hidden');
+            registerModal.classList.add('hidden');
+        }
+
+        // Event listeners for modals
+        loginBtn.addEventListener('click', showLoginModal);
+        registerBtn.addEventListener('click', showRegisterModal);
+        ctaRegisterBtn.addEventListener('click', showRegisterModal);
+        closeLoginModal.addEventListener('click', closeAllModals);
+        closeRegisterModal.addEventListener('click', closeAllModals);
+        switchToRegister.addEventListener('click', () => {
+            loginView.classList.add('hidden');
+            registerView.classList.remove('hidden');
+        });
+        switchToLogin.addEventListener('click', () => {
+            registerView.classList.add('hidden');
+            loginView.classList.remove('hidden');
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal || e.target === registerModal) {
+                closeAllModals();
+            }
+        });
+
+        // --- Toast Notification ---
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `show ${type}`;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- Authentication ---
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                // User is signed in
+                document.getElementById('auth-container').classList.add('hidden');
+                userInfo.classList.remove('hidden');
+                document.getElementById('user-id-display').textContent = user.email;
+                listenForProducts();
+            } else {
+                // User is signed out
+                document.getElementById('auth-container').classList.remove('hidden');
+                userInfo.classList.add('hidden');
+                stopListeningForProducts();
+            }
+        });
+
+        // Login form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showToast("Login successful!");
+                closeAllModals();
+            } catch (error) {
+                showToast(error.message, "error");
+            }
+        });
+
+        // Register form submission
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                showToast("Account created successfully!");
+                closeAllModals();
+            } catch (error) {
+                showToast(error.message, "error");
+            }
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                showToast("Logged out successfully");
+            } catch (error) {
+                showToast(error.message, "error");
+            }
+        });
+
+        // --- Product Management ---
+        let unsubscribeProducts = null;
+
+        // Product upload form
+        productUploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const uploadBtn = document.getElementById('upload-product-btn');
+            const spinner = document.getElementById('upload-spinner');
+            const btnText = document.getElementById('upload-btn-text');
+            
+            uploadBtn.disabled = true;
+            spinner.classList.remove('hidden');
+            btnText.classList.add('hidden');
+            
+            try {
+                const user = auth.currentUser;
+                if (!user) throw new Error("You must be logged in to upload products");
+                
+                const imageFile = document.getElementById('product-image').files[0];
+                if (!imageFile) throw new Error("Please select an image");
+                
+                // Upload image to storage
+                const storagePath = `product_images/${user.uid}/${Date.now()}_${imageFile.name}`;
+                const storageRef = ref(storage, storagePath);
+                await uploadBytes(storageRef, imageFile);
+                const imageUrl = await getDownloadURL(storageRef);
+                
+                // Add product to Firestore
+                await addDoc(collection(db, `artifacts/${appId}/public/data/products`), {
+                    name: document.getElementById('product-name').value,
+                    description: document.getElementById('product-description').value,
+                    price: parseFloat(document.getElementById('product-price').value),
+                    imageUrl: imageUrl, // Store the image URL
+                    sellerId: user.uid,
+                    createdAt: serverTimestamp()
+                });
+                
+                showToast("Product uploaded successfully!");
+                productUploadForm.reset();
+                closeAllModals();
+            } catch (error) {
+                showToast(error.message, "error");
+            } finally {
+                uploadBtn.disabled = false;
+                spinner.classList.add('hidden');
+                btnText.classList.remove('hidden');
+            }
+        });
+
+        // Listen for products
+        function listenForProducts() {
+            const productsCollectionPath = `artifacts/${appId}/public/data/products`;
+            const q = query(collection(db, productsCollectionPath));
+            
+            unsubscribeProducts = onSnapshot(q, (querySnapshot) => {
+                const products = [];
+                querySnapshot.forEach((doc) => {
+                    products.push({ id: doc.id, ...doc.data() });
+                });
+                displayProducts(products);
+            }, (error) => {
+                console.error("Error fetching products:", error);
+                showToast("Error loading products", "error");
+            });
+        }
+
+        function stopListeningForProducts() {
+            if (unsubscribeProducts) {
+                unsubscribeProducts();
+                unsubscribeProducts = null;
+            }
+            productGrid.innerHTML = '';
+            loadingSpinner.classList.remove('hidden');
+        }
+
+        // Display products
+        function displayProducts(products) {
+            loadingSpinner.classList.add('hidden');
+            productGrid.innerHTML = '';
+            
+            if (products.length === 0) {
+                productGrid.innerHTML = '<p class="col-span-full text-center text-gray-500">No products found</p>';
+                return;
+            }
+            
+            products.forEach(product => {
+                const productCard = `
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-semibold text-lg mb-2">${product.name}</h3>
+                            <p class="text-gray-600 mb-4">${product.description}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xl font-bold">$${product.price.toFixed(2)}</span>
+                                <button class="bg-blue-600 text-white px-4 py-2 rounded-md">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                productGrid.insertAdjacentHTML('beforeend', productCard);
+            });
+        }
+
+        // Search functionality
+        searchButton.addEventListener('click', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            // In a real app, you would filter products here
+            // For now, we'll just show a toast
+            if (searchTerm) {
+                showToast(`Searching for: ${searchTerm}`);
+            }
+        });
+
+        // Initialize
+        loadingSpinner.classList.remove('hidden');
+    </script>
+</body>
+</html>
