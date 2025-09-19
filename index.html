@@ -3,594 +3,646 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketplace - Buy and Sell Anything</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>ZimPriceTracker - Inflation Monitoring Chatbot</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        <body>
-       <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyCSgPNrThTZN4yJX39AJi8REzmkYdyIpa8",
-    authDomain: "onlinemarket-57e5d.firebaseapp.com",
-    projectId: "onlinemarket-57e5d",
-    storageBucket: "onlinemarket-57e5d.firebasestorage.app",
-    messagingSenderId: "673856305919",
-    appId: "1:673856305919:web:b59ea162045acc7456eaca",
-    measurementId: "G-XRBN4TBMWS"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-        
         body {
-            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0053b3 0%, #00264d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
-        .hero-bg {
-            background-color: #F3F4F6;
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
         }
-        /* Custom styles for the notification toast */
-        #toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
+
+        .header {
+            background: #0053b3;
             color: white;
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        #toast.show {
-            opacity: 1;
-            visibility: visible;
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        #toast.success {
-            background-color: #28a745; /* Green */
+
+        .zim-flag {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #009739 0%, #009739 33%, #FBDE4A 33%, #FBDE4A 66%, #DE2910 66%, #DE2910 100%);
+            border-radius: 50%;
+            border: 2px solid white;
         }
-        #toast.error {
-            background-color: #dc3545; /* Red */
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f0f5ff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            border-radius: 18px;
+            animation: fadeIn 0.3s ease;
+            line-height: 1.5;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-message {
+            background: #ffffff;
+            border-bottom-left-radius: 5px;
+            align-self: flex-start;
+            border: 1px solid #d0d9e8;
+        }
+
+        .user-message {
+            background: #0053b3;
+            color: white;
+            border-bottom-right-radius: 5px;
+            align-self: flex-end;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        #send-btn {
+            background: #0053b3;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        #send-btn:hover {
+            background: #003d80;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            border-left: 4px solid #0053b3;
+        }
+
+        .product-image {
+            width: 60px;
+            height: 60px;
+            background: #f0f4f8;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: #0053b3;
+            font-size: 1.5rem;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .product-price {
+            color: #0053b3;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .product-store {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .price-change {
+            font-size: 0.85rem;
+            margin-top: 3px;
+        }
+
+        .price-up {
+            color: #e53935;
+        }
+
+        .price-down {
+            color: #4caf50;
+        }
+
+        .typing-indicator {
+            display: inline-flex;
+            padding: 12px 16px;
+            background: #e8ebf0;
+            border-radius: 18px;
+            border-bottom-left-radius: 5px;
+            align-self: flex-start;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #9ea9b9;
+            border-radius: 50%;
+            margin: 0 3px;
+            animation: typingAnimation 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .quick-reply {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .quick-reply-btn {
+            background: #e8f0ff;
+            border: 1px solid #c5d9ff;
+            border-radius: 18px;
+            padding: 8px 15px;
+            margin: 5px 5px 5px 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            color: #0053b3;
+        }
+
+        .quick-reply-btn:hover {
+            background: #d5e5ff;
+        }
+
+        .source-link {
+            display: block;
+            margin-top: 15px;
+            color: #0053b3;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .source-link:hover {
+            text-decoration: underline;
+        }
+
+        .inflation-alert {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .last-updated {
+            font-size: 0.8rem;
+            color: #777;
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                height: 95vh;
+                width: 95%;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
-<body class="bg-white">
-
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <nav class="container mx-auto px-4 lg:px-6 py-3">
-            <div class="flex justify-between items-center">
-                <a href="#" class="text-2xl font-bold text-gray-800">MarketPlace</a>
-                <div class="hidden lg:flex items-center space-x-6">
-                    <a href="#" class="text-gray-600 hover:text-gray-900">Home</a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900">Shop</a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900">Categories</a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900">About Us</a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900">Contact</a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="#" class="text-gray-600 hover:text-gray-900"><i class="fas fa-shopping-cart"></i></a>
-                    <div id="auth-container">
-                        <a href="#" id="login-btn" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700">Login</a>
-                        <a href="#" id="register-btn" class="hidden md:inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500">Become a Seller</a>
-                    </div>
-                    <div id="user-info" class="hidden items-center">
-                        <span id="user-id-display" class="text-sm text-gray-500 mr-4"></span>
-                        <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-400">Logout</button>
-                    </div>
-                    <button class="lg:hidden" id="mobile-menu-button">
-                        <i class="fas fa-bars text-gray-600"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="hidden lg:hidden mt-4" id="mobile-menu">
-                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Home</a>
-                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Shop</a>
-                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Categories</a>
-                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">About Us</a>
-                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Contact</a>
-                <a href="#" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100 md:hidden">Become a Seller</a>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero-bg py-20">
-            <div class="container mx-auto px-4 lg:px-6 text-center">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Find Your Next Treasure</h1>
-                <p class="text-lg text-gray-600 mb-8">Discover unique items from sellers around the world.</p>
-                <div class="max-w-2xl mx-auto">
-                    <div class="relative">
-                        <input type="text" id="search-input" placeholder="Search for products by name or description..." class="w-full py-3 px-5 rounded-full border-2 border-gray-300 focus:outline-none focus:border-blue-500">
-                        <button class="absolute right-0 top-0 mt-2 mr-2 bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-500">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-16">
-            <div class="container mx-auto px-4 lg:px-6">
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Shop by Category</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
-                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-tshirt"></i></div>
-                        <h3 class="font-semibold">Fashion</h3>
-                    </div>
-                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
-                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-laptop"></i></div>
-                        <h3 class="font-semibold">Electronics</h3>
-                    </div>
-                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
-                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-couch"></i></div>
-                        <h3 class="font-semibold">Home & Garden</h3>
-                    </div>
-                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
-                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-book-open"></i></div>
-                        <h3 class="font-semibold">Books</h3>
-                    </div>
-                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
-                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-car"></i></div>
-                        <h3 class="font-semibold">Motors</h3>
-                    </div>
-                    <div class="text-center p-4 rounded-lg hover:bg-gray-100 transition cursor-pointer">
-                        <div class="text-4xl text-blue-600 mb-2"><i class="fas fa-puzzle-piece"></i></div>
-                        <h3 class="font-semibold">Collectibles</h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="bg-gray-50 py-16">
-            <div class="container mx-auto px-4 lg:px-6">
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Featured Products</h2>
-                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    <div id="loading-spinner" class="col-span-full flex justify-center items-center">
-                        <i class="fas fa-spinner fa-spin text-4xl text-blue-600"></i>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-20 bg-blue-600 text-white">
-            <div class="container mx-auto px-4 lg:px-6 text-center">
-                <h2 class="text-3xl font-bold mb-4">Start Selling Today</h2>
-                <p class="text-lg mb-8">Join our community of sellers and reach millions of customers.</p>
-                <button id="cta-register-btn" class="bg-white text-blue-600 font-bold px-8 py-3 rounded-full hover:bg-gray-100 transition duration-300">Register Now</button>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-gray-800 text-white pt-12">
-        <div class="container mx-auto px-4 lg:px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="zim-flag"></div>
                 <div>
-                    <h3 class="text-xl font-bold mb-4">MarketPlace</h3>
-                    <p class="text-gray-400">The best place to buy and sell unique items.</p>
+                    <h1>ZimPriceTracker</h1>
+                    <p>Tracking prices and inflation in Zimbabwe</p>
                 </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-                    <ul>
-                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Support</h3>
-                    <ul>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 py-6 text-center text-gray-500">
-                <p>&copy; 2025 MarketPlace. All rights reserved.</p>
             </div>
         </div>
-    </footer>
 
-    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative">
-            <button id="close-login-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
-           
-            <div id="login-view">
-                <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-                <form id="login-form">
-                    <div class="mb-4">
-                        <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" id="login-email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div class="mb-6">
-                        <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="login-password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition">Login</button>
-                </form>
-                <p class="text-center text-sm text-gray-600 mt-4">
-                    Don't have an account? <button id="switch-to-register" class="font-medium text-blue-600 hover:underline">Register</button>
-                </p>
+        <div class="chat-container" id="chat-container">
+            <div class="message bot-message">
+                <p>Hello! I'm here to help you track prices and inflation data from Zimbabwean supermarkets and shops.</p>
+                <p>What product would you like to check today?</p>
+                <div class="quick-reply">
+                    <button class="quick-reply-btn" data-product="Cooking Oil">Cooking Oil</button>
+                    <button class="quick-reply-btn" data-product="Sugar">Sugar</button>
+                    <button class="quick-reply-btn" data-product="Maize Meal">Maize Meal</button>
+                    <button class="quick-reply-btn" data-product="Bread">Bread</button>
+                    <button class="quick-reply-btn" data-product="List Products">List Available Products</button>
+                </div>
+                <div class="last-updated">Last updated: Today, 10:45 AM</div>
             </div>
+        </div>
 
-            <div id="register-view" class="hidden">
-                <h2 class="text-2xl font-bold mb-6 text-center">Create Account</h2>
-                <form id="register-form">
-                    <div class="mb-4">
-                        <label for="register-email" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" id="register-email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div class="mb-6">
-                        <label for="register-password" class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="register-password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition">Create Account</button>
-                </form>
-                <p class="text-center text-sm text-gray-600 mt-4">
-                    Already have an account? <button id="switch-to-login" class="font-medium text-blue-600 hover:underline">Login</button>
-                </p>
-            </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Ask about product prices or inflation data...">
+            <button id="send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
         </div>
     </div>
-   
-    <div id="register-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg relative">
-            <div class="flex justify-between items-center mb-6">
-                <h2 id="modal-title" class="text-2xl font-bold">Upload a Product</h2>
-                <button id="close-register-modal" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
-            </div>
-           
-            <div id="product-upload-container">
-                <form id="product-upload-form">
-                    <div class="mb-4">
-                        <label for="product-name" class="block text-sm font-medium text-gray-700">Product Name</label>
-                        <input type="text" id="product-name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div class="mb-4">
-                        <label for="product-description" class="block text-sm font-medium text-gray-700">Product Description</label>
-                        <textarea id="product-description" rows="3" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <label for="product-price" class="block text-sm font-medium text-gray-700">Price ($)</label>
-                        <input type="number" id="product-price" step="0.01" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div class="mb-4">
-                        <label for="seller-phone-number" class="block text-sm font-medium text-gray-700">Seller Phone Number (e.g., +233241234567)</label>
-                        <input type="tel" id="seller-phone-number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div class="mb-4">
-                        <label for="product-image" class="block text-sm font-medium text-gray-700">Product Image</label>
-                        <input type="file" id="product-image" accept="image/*" required class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    </div>
-                    <button type="submit" id="upload-product-btn" class="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-500 transition disabled:bg-gray-400">
-                        <span id="upload-btn-text">Upload Product</span>
-                        <i id="upload-spinner" class="fas fa-spinner fa-spin hidden"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-   
-    <div id="toast"></div>
 
-    <script type="module">
-        const firebaseConfig = {
-            apiKey: "AIzaSyDEMO_ONLY_DEMO",
-            authDomain: "demo-project.firebaseapp.com",
-            projectId: "demo-project",
-            storageBucket: "demo-project.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abc123def456"
-        };
-           
-        const appId = 'marketplace-app';
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.getElementById('chat-container');
+            const userInput = document.getElementById('user-input');
+            const sendBtn = document.getElementById('send-btn');
 
-        // Import statements for Firebase services
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+            // Data sources (kept for displaying sources)
+            const dataSources = [
+                {name: "ZimStat Consumer Price Index", url: "https://www.zimstat.co.zw/price-statistics/"},
+                {name: "RBZ Inflation Reports", url: "https://www.rbz.co.zw/inflation-reports/"},
+                {name: "Consumer Council of Zimbabwe", url: "https://ccz.org.zw/price-check/"},
+                {name: "TM Supermarket Price List", url: "https://tmsupermarket.co.zw/prices/"},
+                {name: "OK Zimbabwe Latest Catalogue", url: "https://okzimbabwe.co.zw/catalogue/"},
+                {name: "Ministry of Industry and Commerce", url: "https://www.commerce.gov.zw/price-monitoring/"}
+            ];
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-
-        // DOM Elements
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const loginBtn = document.getElementById('login-btn');
-        const registerBtn = document.getElementById('register-btn');
-        const ctaRegisterBtn = document.getElementById('cta-register-btn');
-        const userInfo = document.getElementById('user-info');
-        const logoutBtn = document.getElementById('logout-btn');
-        const loginModal = document.getElementById('login-modal');
-        const closeLoginModal = document.getElementById('close-login-modal');
-        const registerModal = document.getElementById('register-modal');
-        const closeRegisterModal = document.getElementById('close-register-modal');
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        const switchToRegister = document.getElementById('switch-to-register');
-        const switchToLogin = document.getElementById('switch-to-login');
-        const loginView = document.getElementById('login-view');
-        const registerView = document.getElementById('register-view');
-        const productUploadForm = document.getElementById('product-upload-form');
-        const productGrid = document.getElementById('product-grid');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const searchInput = document.getElementById('search-input');
-        const searchButton = document.querySelector('.relative button');
-
-        // Mobile menu toggle
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Modal toggle functions
-        function showLoginModal() {
-            loginModal.classList.remove('hidden');
-            loginView.classList.remove('hidden');
-            registerView.classList.add('hidden');
-        }
-
-        function showRegisterModal() {
-            registerModal.classList.remove('hidden');
-        }
-
-        function closeAllModals() {
-            loginModal.classList.add('hidden');
-            registerModal.classList.add('hidden');
-        }
-
-        // Event listeners for modals
-        loginBtn.addEventListener('click', showLoginModal);
-        registerBtn.addEventListener('click', showRegisterModal);
-        ctaRegisterBtn.addEventListener('click', showRegisterModal);
-        closeLoginModal.addEventListener('click', closeAllModals);
-        closeRegisterModal.addEventListener('click', closeAllModals);
-        switchToRegister.addEventListener('click', () => {
-            loginView.classList.add('hidden');
-            registerView.classList.remove('hidden');
-        });
-        switchToLogin.addEventListener('click', () => {
-            registerView.classList.add('hidden');
-            loginView.classList.remove('hidden');
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === loginModal || e.target === registerModal) {
-                closeAllModals();
+            // Add message to chat
+            function addMessage(text, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+                messageDiv.innerHTML = text;
+                chatContainer.appendChild(messageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
             }
-        });
 
-        // --- Toast Notification ---
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = `show ${type}`;
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // --- Authentication ---
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                // User is signed in
-                document.getElementById('auth-container').classList.add('hidden');
-                userInfo.classList.remove('hidden');
-                document.getElementById('user-id-display').textContent = user.email;
-                listenForProducts();
-            } else {
-                // User is signed out
-                document.getElementById('auth-container').classList.remove('hidden');
-                userInfo.classList.add('hidden');
-                stopListeningForProducts();
-            }
-        });
-
-        // Login form submission
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-           
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                showToast("Login successful!");
-                closeAllModals();
-            } catch (error) {
-                showToast(error.message, "error");
-            }
-        });
-
-        // Register form submission
-        registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-           
-            try {
-                await createUserWithEmailAndPassword(auth, email, password);
-                showToast("Account created successfully!");
-                closeAllModals();
-            } catch (error) {
-                showToast(error.message, "error");
-            }
-        });
-
-        // Logout
-        logoutBtn.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-                showToast("Logged out successfully");
-            } catch (error) {
-                showToast(error.message, "error");
-            }
-        });
-
-        // --- Product Management ---
-        let unsubscribeProducts = null;
-
-        // Product upload form
-        productUploadForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-           
-            const uploadBtn = document.getElementById('upload-product-btn');
-            const spinner = document.getElementById('upload-spinner');
-            const btnText = document.getElementById('upload-btn-text');
-           
-            uploadBtn.disabled = true;
-            spinner.classList.remove('hidden');
-            btnText.classList.add('hidden');
-           
-            try {
-                const user = auth.currentUser;
-                if (!user) throw new Error("You must be logged in to upload products");
-               
-                const imageFile = document.getElementById('product-image').files[0];
-                if (!imageFile) throw new Error("Please select an image");
-
-                const sellerPhoneNumber = document.getElementById('seller-phone-number').value;
-               
-                // Upload image to storage
-                const storagePath = `product_images/${user.uid}/${Date.now()}_${imageFile.name}`;
-                const storageRef = ref(storage, storagePath);
-                await uploadBytes(storageRef, imageFile);
-                const imageUrl = await getDownloadURL(storageRef);
-               
-                // Add product to Firestore
-                await addDoc(collection(db, `artifacts/${appId}/public/data/products`), {
-                    name: document.getElementById('product-name').value,
-                    description: document.getElementById('product-description').value,
-                    price: parseFloat(document.getElementById('product-price').value),
-                    imageUrl: imageUrl, // Store the image URL
-                    sellerId: user.uid,
-                    sellerPhoneNumber: sellerPhoneNumber, // Store the seller's phone number
-                    createdAt: serverTimestamp()
-                });
-               
-                showToast("Product uploaded successfully!");
-                productUploadForm.reset();
-                closeAllModals();
-            } catch (error) {
-                showToast(error.message, "error");
-            } finally {
-                uploadBtn.disabled = false;
-                spinner.classList.add('hidden');
-                btnText.classList.remove('hidden');
-            }
-        });
-
-        // Listen for products
-        function listenForProducts() {
-            const productsCollectionPath = `artifacts/${appId}/public/data/products`;
-            const q = query(collection(db, productsCollectionPath));
-           
-            unsubscribeProducts = onSnapshot(q, (querySnapshot) => {
-                const products = [];
-                querySnapshot.forEach((doc) => {
-                    products.push({ id: doc.id, ...doc.data() });
-                });
-                displayProducts(products);
-            }, (error) => {
-                console.error("Error fetching products:", error);
-                showToast("Error loading products", "error");
-            });
-        }
-
-        function stopListeningForProducts() {
-            if (unsubscribeProducts) {
-                unsubscribeProducts();
-                unsubscribeProducts = null;
-            }
-            productGrid.innerHTML = '';
-            loadingSpinner.classList.remove('hidden');
-        }
-
-        // Display products
-        function displayProducts(products) {
-            loadingSpinner.classList.add('hidden');
-            productGrid.innerHTML = '';
-           
-            if (products.length === 0) {
-                productGrid.innerHTML = '<p class="col-span-full text-center text-gray-500">No products found</p>';
-                return;
-            }
-           
-            products.forEach(product => {
-                const phoneNumber = product.sellerPhoneNumber || ''; // Get phone number, default to empty string
-                const whatsappLink = `https://wa.me/${phoneNumber.replace(/\+/g, '')}`; // WhatsApp link
-                const callLink = `tel:${phoneNumber}`; // Call link
-
-                const contactButtons = phoneNumber ? `
-                    <div class="flex space-x-2 mt-2">
-                        <a href="${callLink}" class="flex-1 text-center bg-green-500 text-white px-3 py-1 rounded-md text-sm hover:bg-green-600">
-                            <i class="fas fa-phone mr-1"></i> Call
-                        </a>
-                        <a href="${whatsappLink}" target="_blank" class="flex-1 text-center bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600">
-                            <i class="fab fa-whatsapp mr-1"></i> WhatsApp
-                        </a>
-                    </div>
-                ` : '';
-
-                const productCard = `
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                        <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="font-semibold text-lg mb-2">${product.name}</h3>
-                            <p class="text-gray-600 mb-4">${product.description}</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-xl font-bold">$${product.price.toFixed(2)}</span>
-                                <button class="bg-blue-600 text-white px-4 py-2 rounded-md">Add to Cart</button>
-                            </div>
-                            ${contactButtons} </div>
-                    </div>
+            // Show typing indicator
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.classList.add('typing-indicator');
+                typingDiv.id = 'typing-indicator';
+                typingDiv.innerHTML = `
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
                 `;
-                productGrid.insertAdjacentHTML('beforeend', productCard);
-            });
-        }
-
-        // Search functionality
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            // In a real app, you would filter products here
-            // For now, we'll just show a toast
-            // showToast(`Searching for: ${searchTerm}`); // Optional: re-enable for immediate feedback
-        });
-
-        searchButton.addEventListener('click', () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            if (searchTerm) {
-                showToast(`Searching for: ${searchTerm}`);
-                // Implement actual search/filter logic here if you store products locally
-                // Or re-fetch from Firestore with a query if needed.
+                chatContainer.appendChild(typingDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                return typingDiv;
             }
-        });
 
-        // Initialize
-        loadingSpinner.classList.remove('hidden');
+            // Remove typing indicator
+            function removeTypingIndicator() {
+                const typingIndicator = document.getElementById('typing-indicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+
+            // Display a single product result from the database query
+            function displayProductResult(productData, productName) {
+                const productsDiv = document.createElement('div');
+
+                if (productData) {
+                    const productCard = document.createElement('div');
+                    productCard.classList.add('product-card');
+                    // Using a generic icon as we don't have specific image URLs from scraping
+                    const genericIcon = '🛒';
+                    // Assuming productData is [product_name, price, store, timestamp]
+                    const timestamp = new Date(productData[3]).toLocaleString(); // Format timestamp
+
+                    productCard.innerHTML = `
+                        <div class="product-image">${genericIcon}</div>
+                        <div class="product-info">
+                            <div class="product-name">${productData[0]}</div>
+                            <div class="product-store">${productData[2]}</div>
+                            <div class="last-updated">Last updated: ${timestamp}</div>
+                        </div>
+                        <div class="product-price">${productData[1]}</div>
+                    `;
+                    productsDiv.appendChild(productCard);
+                    addMessage(`Here is the latest price I found for "${productName}":`);
+
+                } else {
+                    addMessage(`Sorry, I couldn't find the latest price for "${productName}" in my database.`);
+                    addMessage("Data might be unavailable or the product name might be slightly different.");
+                    addMessage("Would you like to see a list of available products?");
+                     // Add quick reply for listing products
+                    addQuickReplyButton('List Available Products', 'List Products');
+                }
+
+                chatContainer.appendChild(productsDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+             // Display a list of product names
+            function displayProductList(productList) {
+                if (productList && productList.length > 0) {
+                    let listHtml = "<p>Here are some products I have data for:</p><ul>";
+                    productList.forEach(product => {
+                         // Create clickable list items for products
+                        listHtml += `<li><button class="quick-reply-btn" data-product="${product}">${product}</button></li>`;
+                    });
+                    listHtml += "</ul><p>Click on a product name to see its price.</p>"; // Instruction to user
+                    addMessage(listHtml);
+
+                     // Add event listeners to the newly added product list buttons
+                    chatContainer.querySelectorAll('.quick-reply-btn').forEach(button => {
+                        // Only add listeners if they haven't been added already (might need refinement for dynamic content)
+                         if (!button.classList.contains('listener-added')) {
+                             button.addEventListener('click', function() {
+                                 userInput.value = this.getAttribute('data-product');
+                                 handleUserMessage();
+                             });
+                             button.classList.add('listener-added'); // Mark as listener added
+                         }
+                     });
+
+                } else {
+                    addMessage("I don't have any product data available right now.");
+                    addMessage("This might be because scraping failed recently, or the database is empty.");
+                }
+            }
+
+
+            // Display data sources
+            function displayDataSources() {
+                const sourcesDiv = document.createElement('div');
+                sourcesDiv.innerHTML = `<p>Here are some reliable sources for price and inflation data in Zimbabwe:</p>`;
+
+                const sourcesList = document.createElement('ul');
+                sourcesList.style.margin = '10px 0 10px 20px';
+
+                dataSources.forEach(source => {
+                    const listItem = document.createElement('li');
+                    listItem.style.marginBottom = '8px';
+                    listItem.innerHTML = `<a href="${source.url}" target="_blank" class="source-link">${source.name}</a>`;
+                    sourcesList.appendChild(listItem);
+                });
+
+                sourcesDiv.appendChild(sourcesList);
+                chatContainer.appendChild(sourcesDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            // Show inflation alert
+            function showInflationAlert() {
+                const alertDiv = document.createElement('div');
+                alertDiv.classList.add('inflation-alert');
+                alertDiv.innerHTML = `
+                    <strong><i class="fas fa-exclamation-triangle"></i> Inflation Alert</strong>
+                    <p>Zimbabwe's annual inflation rate reached 175.8% in June 2023, according to ZimStat.</p>
+                    <p>Food and non-alcoholic beverages inflation stands at 285.0%.</p>
+                `;
+                chatContainer.appendChild(alertDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+             // Function to add quick reply buttons dynamically
+            function addQuickReplyButton(text, dataValue) {
+                // Find the last message element and add quick replies there
+                const messageElements = chatContainer.querySelectorAll('.message');
+                const lastMessageElement = messageElements[messageElements.length - 1];
+
+                 if (!lastMessageElement) return; // Exit if no message elements found
+
+                 let quickReplyDiv = lastMessageElement.querySelector('.quick-reply');
+                 if (!quickReplyDiv) {
+                     quickReplyDiv = document.createElement('div');
+                     quickReplyDiv.classList.add('quick-reply');
+                     lastMessageElement.appendChild(quickReplyDiv);
+                 }
+
+                const button = document.createElement('button');
+                button.classList.add('quick-reply-btn');
+                button.textContent = text;
+                button.setAttribute('data-product', dataValue); // Use data-product attribute for value
+
+                 // Prevent adding duplicate listeners
+                 if (!button.classList.contains('listener-added')) {
+                     button.addEventListener('click', function() {
+                         userInput.value = this.getAttribute('data-product');
+                         handleUserMessage();
+                     });
+                     button.classList.add('listener-added');
+                 }
+                quickReplyDiv.appendChild(button);
+            }
+
+
+            // Handle user message
+            async function handleUserMessage() { // Made function async to handle kernel invoke
+                const message = userInput.value.trim();
+                if (message === '') return;
+
+                addMessage(message, true);
+                userInput.value = '';
+
+                const typingIndicator = showTypingIndicator();
+
+                const lowerMessage = message.toLowerCase();
+
+                // Simple keyword matching for commands and products
+                let command = null;
+                let productQuery = null;
+
+                if (lowerMessage.includes('list products') || lowerMessage === 'products' || lowerMessage === 'list available products') {
+                    command = 'list_products';
+                } else if (lowerMessage.includes('source') || lowerMessage.includes('where') || lowerMessage.includes('data')) {
+                    command = 'show_sources';
+                } else if (lowerMessage.includes('inflation') || lowerMessage.includes('economic')) {
+                    command = 'show_inflation';
+                } else {
+                    // Assume it's a product query if not a recognized command
+                    // Simple extraction: take the whole message as potential product name
+                    productQuery = message;
+                }
+
+
+                setTimeout(async () => { // Added async here too
+                    removeTypingIndicator();
+
+                    if (command === 'list_products') {
+                         addMessage(`Fetching list of available products...`);
+                         let productList = [];
+                         try {
+                              if (typeof google === 'undefined' || !google.colab || !google.colab.kernel || !google.colab.kernel.invoke_function) {
+                                 throw new Error("Colab kernel functions not available.");
+                              }
+                             const response = await google.colab.kernel.invoke_function('list_all_products', []);
+                              if (response && response.data && response.data.retval !== undefined) {
+                                productList = response.data.retval;
+                              } else {
+                                  console.error("Unexpected response format from kernel invoke (list_all_products):", response);
+                                  addMessage("Error retrieving product list. Please try again later or check if the database has data.");
+                              }
+                         } catch (error) {
+                            console.error("Error invoking Python function (list_all_products):", error);
+                            addMessage("An error occurred while fetching the product list. This might be a connection issue.");
+                         }
+                         displayProductList(productList);
+
+                    } else if (command === 'show_sources') {
+                        addMessage("I can fetch price data from various online sources including supermarket websites, government publications, and economic reports.");
+                        displayDataSources();
+
+                    } else if (command === 'show_inflation') {
+                        addMessage("Current inflation data for Zimbabwe:");
+                        showInflationAlert();
+                        addMessage("I can help you track specific product prices that are contributing to inflation.");
+
+                    } else if (productQuery) { // Handle product queries
+                         addMessage(`Searching for the latest price for "${productQuery}"...`);
+                        let result = null;
+                        try {
+                            // Check if kernel functions are available before calling
+                             if (typeof google === 'undefined' || !google.colab || !google.colab.kernel || !google.colab.kernel.invoke_function) {
+                                 throw new Error("Colab kernel functions not available.");
+                              }
+                            // Call Python function to get price from DB
+                            // Pass the raw product query for the Python function to handle LIKE matching
+                            const response = await google.colab.kernel.invoke_function('get_latest_price', [productQuery]);
+                            // The result is in response.data. The format depends on how the Python function returns data.
+                            // Assuming the Python function returns a simple result value.
+                            // Check the structure based on previous tests: get_latest_price returns a tuple or None.
+                             if (response && response.data && response.data.retval !== undefined) { // Check for undefined explicitly
+                                result = response.data.retval;
+                             } else {
+                                 console.error("Unexpected response format from kernel invoke (get_latest_price):", response);
+                                 addMessage("Error retrieving price data. Please try again later.");
+                             }
+
+                        } catch (error) {
+                            console.error("Error invoking Python function (get_latest_price):", error);
+                            addMessage("An error occurred while fetching price data. This might be a connection issue.");
+                        }
+
+                        displayProductResult(result, productQuery); // Display the result from the database
+
+                    } else {
+                        // Fallback for unrecognized input that wasn't a product query or command
+                         addMessage("I'm not sure I understand that. You can ask about specific products or commands like 'inflation', 'sources', or 'list products'.");
+                    }
+
+                    // Add general quick replies after processing
+                     addQuickReplyButton('Cooking Oil', 'Cooking Oil');
+                     addQuickReplyButton('Sugar', 'Sugar');
+                     addQuickReplyButton('Maize Meal', 'Maize Meal');
+                     addQuickReplyButton('List Available Products', 'List Products');
+
+
+                }, 1000); // Reduced delay slightly
+
+            }
+
+            // Event listeners
+            sendBtn.addEventListener('click', handleUserMessage);
+
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleUserMessage();
+                }
+            });
+
+            // Add event listeners to initial quick reply buttons
+            document.querySelectorAll('.quick-reply-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    userInput.value = this.getAttribute('data-product');
+                    handleUserMessage();
+                });
+            });
+
+            // Show initial inflation alert after a delay
+            setTimeout(() => {
+                showInflationAlert();
+            }, 1000);
+        });
     </script>
 </body>
 </html>
