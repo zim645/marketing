@@ -14,8 +14,95 @@
             --text-light: #f7fafc;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { color: var(--text-dark); line-height: 1.6; background-color: #edf2f7; }
+        body { color: var(--text-dark); line-height: 1.6; background-color: #edf2f7; padding-top: 80px; }
         .container { max-width: 1200px; margin: 20px auto; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+
+        /* === TOP NAVIGATION BAR === */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 0 20px;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .logo span {
+            color: var(--accent-color);
+        }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-item {
+            margin-left: 30px;
+            position: relative;
+        }
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 8px 0;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+        .nav-link.active {
+            color: var(--accent-color);
+        }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+        .volunteer-btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            margin-left: 30px;
+        }
+        .volunteer-btn:hover {
+            background-color: #c53030;
+            color: white;
+        }
 
         /* === HEADER & TAGLINE === */
         .site-header { background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; padding: 2.5rem; text-align: center; }
@@ -73,17 +160,86 @@
         .site-footer { text-align: center; padding: 2.5rem; background: #1a202c; color: #a0aec0; font-size: 0.95rem; }
 
         /* Responsive */
+        @media (max-width: 992px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-item {
+                margin: 10px 0;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .volunteer-btn {
+                margin: 20px 0 0 0;
+            }
+            .nav-container {
+                flex-wrap: wrap;
+            }
+        }
         @media (max-width: 768px) {
+            body { padding-top: 70px; }
             .container { margin: 0; border-radius: 0; }
             .tagline-large, .organization-name { font-size: 2.2rem; }
             .donation-heading { font-size: 1.8rem; }
             .pill-container { gap: 0.8rem; }
             .pill { padding: 0.8rem 1.5rem; font-size: 0.95rem; }
+            .nav-container { padding: 10px 0; }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- TOP NAVIGATION BAR -->
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Rise<span>&</span>Shine</a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#programs" class="nav-link">Programs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#news" class="nav-link">News</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#events" class="nav-link">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#gallery" class="nav-link">Gallery</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#volunteer" class="volunteer-btn">Become a Volunteer</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
     <div class="container">
         <!-- HEADER: Tagline & Name -->
         <header class="site-header">
@@ -108,7 +264,7 @@
         </section>
 
         <!-- "WE ARE" / MISSION SECTION -->
-        <section class="mission-section">
+        <section class="mission-section" id="about">
             <span class="section-label">We are</span>
             <h2 class="section-heading">Inspiring and Helping for Better Lifestyle</h2>
             <p class="mission-text">
@@ -137,7 +293,7 @@
         </section>
 
         <!-- CORE OBJECTIVES -->
-        <section class="objectives-section">
+        <section class="objectives-section" id="programs">
             <h2 class="section-heading">Our Core Objectives</h2>
             <div class="objectives-grid">
                 <div class="obj-card">
@@ -172,8 +328,29 @@
             </div>
         </section>
 
+        <!-- PLACEHOLDER SECTIONS FOR NAVIGATION -->
+        <section id="news" style="padding: 4rem 2.5rem; background-color: #f8fafc; display: none;">
+            <h2 class="section-heading">Latest News</h2>
+            <p style="text-align: center; margin-top: 2rem;">News section content will be added here.</p>
+        </section>
+        
+        <section id="events" style="padding: 4rem 2.5rem; background-color: #fff; display: none;">
+            <h2 class="section-heading">Upcoming Events</h2>
+            <p style="text-align: center; margin-top: 2rem;">Events section content will be added here.</p>
+        </section>
+        
+        <section id="gallery" style="padding: 4rem 2.5rem; background-color: #f8fafc; display: none;">
+            <h2 class="section-heading">Gallery</h2>
+            <p style="text-align: center; margin-top: 2rem;">Gallery section content will be added here.</p>
+        </section>
+        
+        <section id="volunteer" style="padding: 4rem 2.5rem; background-color: #fff; display: none;">
+            <h2 class="section-heading">Become a Volunteer</h2>
+            <p style="text-align: center; margin-top: 2rem;">Volunteer registration form will be added here.</p>
+        </section>
+
         <!-- CONTACT & REGISTRATION -->
-        <section class="contact-section">
+        <section class="contact-section" id="contact">
             <div class="contact-wrapper">
                 <h2 class="section-heading">Contact & Official Registration</h2>
                 <div class="contact-details">
@@ -192,7 +369,66 @@
 
         <footer class="site-footer">
             <p>&copy; 2025 Rise and Shine Empowerment. "We rise by lifting each other!"</p>
+            <div style="margin-top: 1rem;">
+                <a href="#" style="color: #a0aec0; margin: 0 10px; text-decoration: none;">Home</a> |
+                <a href="#about" style="color: #a0aec0; margin: 0 10px; text-decoration: none;">About Us</a> |
+                <a href="#programs" style="color: #a0aec0; margin: 0 10px; text-decoration: none;">Programs</a> |
+                <a href="#contact" style="color: #a0aec0; margin: 0 10px; text-decoration: none;">Contact Us</a>
+            </div>
         </footer>
     </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    // Close mobile menu if open
+                    document.getElementById('navMenu').classList.remove('active');
+                    
+                    // Scroll to target
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Highlight active navigation item based on scroll position
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.clientHeight;
+                if(scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${current}` || 
+                   (current === '' && link.getAttribute('href') === '#')) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
