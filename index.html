@@ -36,17 +36,48 @@
             align-items: center;
             padding: 15px 0;
         }
-        .logo {
+        
+        /* Logo with overlapping R and S */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .logo-symbol {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+        .logo-letter-r {
+            position: absolute;
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--primary-color);
+            z-index: 2;
+            top: 0;
+            left: 0;
+            transform: rotate(-5deg);
+        }
+        .logo-letter-s {
+            position: absolute;
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--accent-color);
+            z-index: 1;
+            top: 5px;
+            left: 15px;
+            transform: rotate(5deg);
+        }
+        .logo-text {
             font-size: 1.8rem;
             font-weight: 800;
             color: var(--primary-color);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
         }
-        .logo span {
+        .logo-text span {
             color: var(--accent-color);
         }
+        
         .nav-menu {
             display: flex;
             list-style: none;
@@ -105,18 +136,89 @@
         }
 
         /* === HEADER & TAGLINE === */
-        .site-header { background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; padding: 2.5rem; text-align: center; }
-        .tagline-small { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.9; margin-bottom: 0.5rem; }
-        .tagline-large { font-size: 2.8rem; font-weight: 800; margin: 1rem 0; line-height: 1.2; }
-        .organization-name { font-size: 3.5rem; font-weight: 900; margin: 1rem 0; letter-spacing: -0.5px; }
-
-        /* === DONATION SECTION (Stated Once) === */
-        .donation-banner { background-color: var(--accent-color); color: white; padding: 3rem 2rem; text-align: center; }
-        .donation-label { font-size: 1.1rem; letter-spacing: 3px; margin-bottom: 1rem; display: block; }
-        .donation-heading { font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .donation-tagline { font-size: 1.3rem; max-width: 800px; margin: 0 auto 2.5rem; opacity: 0.95; }
-        .pill-container { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; max-width: 900px; margin: 0 auto; }
-        .pill { background: rgba(255, 255, 255, 0.15); padding: 1rem 2rem; border-radius: 50px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); }
+        .site-header { 
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); 
+            color: white; 
+            padding: 3rem 2.5rem; 
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .site-header::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            top: -150px;
+            right: -100px;
+        }
+        .site-header::after {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            bottom: -100px;
+            left: -50px;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        .header-logo {
+            margin-bottom: 1.5rem;
+        }
+        .header-logo-symbol {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+        }
+        .header-logo-letter-r {
+            position: absolute;
+            font-size: 85px;
+            font-weight: 900;
+            color: white;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            transform: rotate(-5deg);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header-logo-letter-s {
+            position: absolute;
+            font-size: 85px;
+            font-weight: 900;
+            color: var(--accent-color);
+            z-index: 1;
+            top: 10px;
+            left: 30px;
+            transform: rotate(5deg);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .tagline-small { 
+            font-size: 0.9rem; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            opacity: 0.9; 
+            margin-bottom: 0.5rem; 
+        }
+        .tagline-large { 
+            font-size: 2.8rem; 
+            font-weight: 800; 
+            margin: 1rem 0; 
+            line-height: 1.2; 
+        }
+        .organization-name { 
+            font-size: 3.5rem; 
+            font-weight: 900; 
+            margin: 1rem 0; 
+            letter-spacing: -0.5px; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
 
         /* === "WE ARE" / MISSION SECTION === */
         .mission-section { padding: 4rem 2.5rem; background-color: var(--light-bg); }
@@ -146,6 +248,98 @@
         .prog-card:hover { transform: translateY(-5px); }
         .prog-icon { font-size: 2.2rem; color: var(--secondary-color); margin-bottom: 1rem; }
         .prog-card h5 { color: var(--primary-color); margin-bottom: 0.8rem; font-size: 1.3rem; }
+
+        /* === DONATION SECTION (MOVED DOWN) === */
+        .donation-section { 
+            background-color: var(--accent-color); 
+            color: white; 
+            padding: 4rem 2.5rem; 
+            text-align: center; 
+            margin: 2rem 2.5rem;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .donation-section::before {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+        }
+        .donation-section::after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+        }
+        .donation-content {
+            position: relative;
+            z-index: 1;
+        }
+        .donation-label { 
+            font-size: 1.1rem; 
+            letter-spacing: 3px; 
+            margin-bottom: 1rem; 
+            display: block; 
+            font-weight: 600;
+        }
+        .donation-heading { 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            margin-bottom: 1.5rem; 
+        }
+        .donation-tagline { 
+            font-size: 1.3rem; 
+            max-width: 800px; 
+            margin: 0 auto 2.5rem; 
+            opacity: 0.95; 
+        }
+        .pill-container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 1rem; 
+            justify-content: center; 
+            max-width: 900px; 
+            margin: 0 auto 2rem; 
+        }
+        .pill { 
+            background: rgba(255, 255, 255, 0.2); 
+            padding: 0.8rem 1.8rem; 
+            border-radius: 50px; 
+            font-weight: 600; 
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s;
+        }
+        .pill:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        .donation-button {
+            display: inline-block;
+            background-color: white;
+            color: var(--accent-color);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .donation-button:hover {
+            background-color: #f7fafc;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
 
         /* === CONTACT & REGISTRATION === */
         .contact-section { padding: 4rem 2.5rem; background-color: var(--primary-color); color: var(--text-light); }
@@ -187,15 +381,30 @@
             .nav-container {
                 flex-wrap: wrap;
             }
+            .donation-section {
+                margin: 2rem 1rem;
+            }
         }
         @media (max-width: 768px) {
             body { padding-top: 70px; }
             .container { margin: 0; border-radius: 0; }
             .tagline-large, .organization-name { font-size: 2.2rem; }
-            .donation-heading { font-size: 1.8rem; }
+            .donation-heading { font-size: 2rem; }
             .pill-container { gap: 0.8rem; }
             .pill { padding: 0.8rem 1.5rem; font-size: 0.95rem; }
             .nav-container { padding: 10px 0; }
+            .header-logo-symbol {
+                width: 80px;
+                height: 80px;
+            }
+            .header-logo-letter-r {
+                font-size: 68px;
+            }
+            .header-logo-letter-s {
+                font-size: 68px;
+                left: 24px;
+                top: 8px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -204,7 +413,13 @@
     <!-- TOP NAVIGATION BAR -->
     <nav class="top-navbar">
         <div class="nav-container">
-            <a href="#" class="logo">Rise<span>&</span>Shine</a>
+            <a href="#" class="logo-container">
+                <div class="logo-symbol">
+                    <div class="logo-letter-r">R</div>
+                    <div class="logo-letter-s">S</div>
+                </div>
+                <div class="logo-text">Rise<span>&</span>Shine</div>
+            </a>
             
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
@@ -241,27 +456,20 @@
 
     <!-- MAIN CONTENT -->
     <div class="container">
-        <!-- HEADER: Tagline & Name -->
+        <!-- HEADER: Tagline & Name with Logo -->
         <header class="site-header">
-            <div class="tagline-small">We rise by lifting each other!</div>
-            <h1 class="organization-name">Rise and Shine Empowerment</h1>
-            <div class="tagline-large">Empower a youth, transform a community.</div>
-        </header>
-
-        <!-- DONATION SECTION: Stated Once, Prominently -->
-        <section class="donation-banner">
-            <span class="donation-label">HELP & DONATE US</span>
-            <h2 class="donation-heading">Support Youth & Vulnerable Children</h2>
-            <p class="donation-tagline">Your contribution funds vocational training, safe shelter, quality education, and technology programs for marginalized youth.</p>
-            <div class="pill-container">
-                <span class="pill">Youth Empowerment</span>
-                <span class="pill">Safe Shelter</span>
-                <span class="pill">Education Access</span>
-                <span class="pill">AI & Tech Skills</span>
-                <span class="pill">Sports & Vocational</span>
-                <span class="pill">Community Development</span>
+            <div class="header-content">
+                <div class="header-logo">
+                    <div class="header-logo-symbol">
+                        <div class="header-logo-letter-r">R</div>
+                        <div class="header-logo-letter-s">S</div>
+                    </div>
+                </div>
+                <div class="tagline-small">We rise by lifting each other!</div>
+                <h1 class="organization-name">Rise and Shine Empowerment</h1>
+                <div class="tagline-large">Empower a youth, transform a community.</div>
             </div>
-        </section>
+        </header>
 
         <!-- "WE ARE" / MISSION SECTION -->
         <section class="mission-section" id="about">
@@ -325,6 +533,30 @@
                 <div class="prog-card"><div class="prog-icon"><i class="fas fa-graduation-cap"></i></div><h5>Academic Support</h5><p>Dissertation & project guidance.</p></div>
                 <div class="prog-card"><div class="prog-icon"><i class="fas fa-clinic-medical"></i></div><h5>Clinical Trials Training</h5><p>Research methodology & ethics.</p></div>
                 <div class="prog-card"><div class="prog-icon"><i class="fas fa-seedling"></i></div><h5>Agri-Tech & Entrepreneurship</h5><p>Sustainable business skills.</p></div>
+            </div>
+        </section>
+
+        <!-- DONATION SECTION (MOVED DOWN) -->
+        <section class="donation-section">
+            <div class="donation-content">
+                <span class="donation-label">HELP & DONATE US</span>
+                <h2 class="donation-heading">Support Youth & Vulnerable Children</h2>
+                <p class="donation-tagline">
+                    Your contribution funds vocational training, safe shelter, quality education, and technology programs for marginalized youth.
+                </p>
+                
+                <div class="pill-container">
+                    <span class="pill">Youth Empowerment</span>
+                    <span class="pill">Safe Shelter</span>
+                    <span class="pill">Education Access</span>
+                    <span class="pill">AI & Tech Skills</span>
+                    <span class="pill">Sports & Vocational</span>
+                    <span class="pill">Community Development</span>
+                </div>
+                
+                <a href="#contact" class="donation-button">
+                    <i class="fas fa-heart"></i> Make a Donation Today
+                </a>
             </div>
         </section>
 
@@ -428,6 +660,31 @@
                     link.classList.add('active');
                 }
             });
+        });
+        
+        // Animate logo on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoRSymbol = document.querySelector('.header-logo-letter-r');
+            const logoSSymbol = document.querySelector('.header-logo-letter-s');
+            
+            if(logoRSymbol && logoSSymbol) {
+                // Reset for animation
+                logoRSymbol.style.transform = 'rotate(-5deg) translateX(-20px)';
+                logoSSymbol.style.transform = 'rotate(5deg) translateX(20px)';
+                logoRSymbol.style.opacity = '0';
+                logoSSymbol.style.opacity = '0';
+                
+                // Animate in
+                setTimeout(() => {
+                    logoRSymbol.style.transition = 'all 0.8s ease-out';
+                    logoSSymbol.style.transition = 'all 0.8s ease-out 0.2s';
+                    
+                    logoRSymbol.style.transform = 'rotate(-5deg) translateX(0)';
+                    logoSSymbol.style.transform = 'rotate(5deg) translateX(0)';
+                    logoRSymbol.style.opacity = '1';
+                    logoSSymbol.style.opacity = '1';
+                }, 300);
+            }
         });
     </script>
 </body>
