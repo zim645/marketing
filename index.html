@@ -3,646 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZimPriceTracker - Inflation Monitoring Chatbot</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Rise and Shine Empowerment</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --primary-color: #1a365d; /* Deep blue */
+            --secondary-color: #2b6cb0; /* Medium blue */
+            --accent-color: #e53e3e;   /* Red for highlights */
+            --light-bg: #f7fafc;       /* Light background */
+            --text-dark: #2d3748;
+            --text-light: #f7fafc;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { color: var(--text-dark); line-height: 1.6; background-color: #edf2f7; }
+        .container { max-width: 1200px; margin: 20px auto; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
 
-        body {
-            background: linear-gradient(135deg, #0053b3 0%, #00264d 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+        /* === HEADER & TAGLINE === */
+        .site-header { background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; padding: 2.5rem; text-align: center; }
+        .tagline-small { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.9; margin-bottom: 0.5rem; }
+        .tagline-large { font-size: 2.8rem; font-weight: 800; margin: 1rem 0; line-height: 1.2; }
+        .organization-name { font-size: 3.5rem; font-weight: 900; margin: 1rem 0; letter-spacing: -0.5px; }
 
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 90vh;
-        }
+        /* === DONATION SECTION (Stated Once) === */
+        .donation-banner { background-color: var(--accent-color); color: white; padding: 3rem 2rem; text-align: center; }
+        .donation-label { font-size: 1.1rem; letter-spacing: 3px; margin-bottom: 1rem; display: block; }
+        .donation-heading { font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .donation-tagline { font-size: 1.3rem; max-width: 800px; margin: 0 auto 2.5rem; opacity: 0.95; }
+        .pill-container { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; max-width: 900px; margin: 0 auto; }
+        .pill { background: rgba(255, 255, 255, 0.15); padding: 1rem 2rem; border-radius: 50px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); }
 
-        .header {
-            background: #0053b3;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        /* === "WE ARE" / MISSION SECTION === */
+        .mission-section { padding: 4rem 2.5rem; background-color: var(--light-bg); }
+        .section-label { font-size: 1rem; color: var(--secondary-color); font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1rem; }
+        .section-heading { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1.5rem; }
+        .mission-text { font-size: 1.2rem; max-width: 900px; margin-bottom: 2rem; color: #4a5568; }
+        .core-aim-box { background: white; padding: 2rem; border-radius: 10px; border-left: 6px solid var(--accent-color); margin: 2.5rem 0; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .core-aim-box p { font-size: 1.4rem; font-weight: 600; color: var(--primary-color); }
 
-        .header-content {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        /* === VISION & MISSION === */
+        .vision-mission { padding: 4rem 2.5rem; text-align: center; }
+        .vm-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; max-width: 1000px; margin: 3rem auto 0; }
+        .vm-card { padding: 2.5rem; border-radius: 10px; background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.06); border-top: 5px solid var(--secondary-color); }
+        .vm-card h3 { color: var(--primary-color); margin-bottom: 1.2rem; font-size: 1.8rem; }
 
-        .zim-flag {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #009739 0%, #009739 33%, #FBDE4A 33%, #FBDE4A 66%, #DE2910 66%, #DE2910 100%);
-            border-radius: 50%;
-            border: 2px solid white;
-        }
+        /* === CORE OBJECTIVES === */
+        .objectives-section { padding: 4rem 2.5rem; background-color: #f0fff4; }
+        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
+        .obj-card { background: white; padding: 2.5rem; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); position: relative; padding-top: 3.5rem; }
+        .obj-number { position: absolute; top: -20px; left: 2rem; background: var(--accent-color); color: white; width: 45px; height: 45px; border-radius: 50%; display: grid; place-items: center; font-size: 1.4rem; font-weight: 800; }
+        .obj-card h4 { color: var(--primary-color); font-size: 1.5rem; margin-bottom: 1rem; }
 
-        .header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
+        /* === EXTENDED PROGRAMS === */
+        .programs-section { padding: 4rem 2.5rem; }
+        .programs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .prog-card { background: var(--light-bg); padding: 2rem; border-radius: 8px; border-left: 5px solid var(--secondary-color); transition: transform 0.3s; }
+        .prog-card:hover { transform: translateY(-5px); }
+        .prog-icon { font-size: 2.2rem; color: var(--secondary-color); margin-bottom: 1rem; }
+        .prog-card h5 { color: var(--primary-color); margin-bottom: 0.8rem; font-size: 1.3rem; }
 
-        .header p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
+        /* === CONTACT & REGISTRATION === */
+        .contact-section { padding: 4rem 2.5rem; background-color: var(--primary-color); color: var(--text-light); }
+        .contact-wrapper { max-width: 1000px; margin: 0 auto; }
+        .contact-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2.5rem; margin: 3rem 0; }
+        .contact-item { display: flex; align-items: flex-start; gap: 1.2rem; }
+        .contact-icon { background: rgba(255,255,255,0.1); width: 55px; height: 55px; border-radius: 50%; display: grid; place-items: center; font-size: 1.5rem; flex-shrink: 0; }
+        .owner-highlight { background: rgba(255,255,255,0.08); padding: 2rem; border-radius: 10px; margin-top: 2rem; border-left: 5px solid var(--accent-color); }
+        .owner-email { color: #90cdf4; font-size: 1.3rem; font-weight: 600; margin-top: 0.5rem; }
 
-        .chat-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            background: #f0f5ff;
-            display: flex;
-            flex-direction: column;
-        }
+        /* === FOOTER === */
+        .site-footer { text-align: center; padding: 2.5rem; background: #1a202c; color: #a0aec0; font-size: 0.95rem; }
 
-        .message {
-            max-width: 75%;
-            padding: 12px 16px;
-            margin-bottom: 15px;
-            border-radius: 18px;
-            animation: fadeIn 0.3s ease;
-            line-height: 1.5;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .bot-message {
-            background: #ffffff;
-            border-bottom-left-radius: 5px;
-            align-self: flex-start;
-            border: 1px solid #d0d9e8;
-        }
-
-        .user-message {
-            background: #0053b3;
-            color: white;
-            border-bottom-right-radius: 5px;
-            align-self: flex-end;
-        }
-
-        .input-area {
-            display: flex;
-            padding: 15px;
-            background: white;
-            border-top: 1px solid #eee;
-        }
-
-        #user-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            outline: none;
-            font-size: 1rem;
-        }
-
-        #send-btn {
-            background: #0053b3;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            margin-left: 10px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.3s;
-        }
-
-        #send-btn:hover {
-            background: #003d80;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            display: flex;
-            align-items: center;
-            border-left: 4px solid #0053b3;
-        }
-
-        .product-image {
-            width: 60px;
-            height: 60px;
-            background: #f0f4f8;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 15px;
-            color: #0053b3;
-            font-size: 1.5rem;
-        }
-
-        .product-info {
-            flex: 1;
-        }
-
-        .product-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        .product-price {
-            color: #0053b3;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .product-store {
-            font-size: 0.9rem;
-            color: #777;
-        }
-
-        .price-change {
-            font-size: 0.85rem;
-            margin-top: 3px;
-        }
-
-        .price-up {
-            color: #e53935;
-        }
-
-        .price-down {
-            color: #4caf50;
-        }
-
-        .typing-indicator {
-            display: inline-flex;
-            padding: 12px 16px;
-            background: #e8ebf0;
-            border-radius: 18px;
-            border-bottom-left-radius: 5px;
-            align-self: flex-start;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: #9ea9b9;
-            border-radius: 50%;
-            margin: 0 3px;
-            animation: typingAnimation 1.4s infinite;
-        }
-
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typingAnimation {
-            0%, 60%, 100% {
-                transform: translateY(0);
-            }
-            30% {
-                transform: translateY(-5px);
-            }
-        }
-
-        .quick-reply {
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        .quick-reply-btn {
-            background: #e8f0ff;
-            border: 1px solid #c5d9ff;
-            border-radius: 18px;
-            padding: 8px 15px;
-            margin: 5px 5px 5px 0;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            color: #0053b3;
-        }
-
-        .quick-reply-btn:hover {
-            background: #d5e5ff;
-        }
-
-        .source-link {
-            display: block;
-            margin-top: 15px;
-            color: #0053b3;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .source-link:hover {
-            text-decoration: underline;
-        }
-
-        .inflation-alert {
-            background: #fff8e1;
-            border-left: 4px solid #ffc107;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin: 10px 0;
-            font-size: 0.9rem;
-        }
-
-        .last-updated {
-            font-size: 0.8rem;
-            color: #777;
-            text-align: right;
-            margin-top: 5px;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                height: 95vh;
-                width: 95%;
-            }
-
-            .message {
-                max-width: 85%;
-            }
-
-            .header h1 {
-                font-size: 1.5rem;
-            }
+            .container { margin: 0; border-radius: 0; }
+            .tagline-large, .organization-name { font-size: 2.2rem; }
+            .donation-heading { font-size: 1.8rem; }
+            .pill-container { gap: 0.8rem; }
+            .pill { padding: 0.8rem 1.5rem; font-size: 0.95rem; }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="header-content">
-                <div class="zim-flag"></div>
-                <div>
-                    <h1>ZimPriceTracker</h1>
-                    <p>Tracking prices and inflation in Zimbabwe</p>
+        <!-- HEADER: Tagline & Name -->
+        <header class="site-header">
+            <div class="tagline-small">We rise by lifting each other!</div>
+            <h1 class="organization-name">Rise and Shine Empowerment</h1>
+            <div class="tagline-large">Empower a youth, transform a community.</div>
+        </header>
+
+        <!-- DONATION SECTION: Stated Once, Prominently -->
+        <section class="donation-banner">
+            <span class="donation-label">HELP & DONATE US</span>
+            <h2 class="donation-heading">Support Youth & Vulnerable Children</h2>
+            <p class="donation-tagline">Your contribution funds vocational training, safe shelter, quality education, and technology programs for marginalized youth.</p>
+            <div class="pill-container">
+                <span class="pill">Youth Empowerment</span>
+                <span class="pill">Safe Shelter</span>
+                <span class="pill">Education Access</span>
+                <span class="pill">AI & Tech Skills</span>
+                <span class="pill">Sports & Vocational</span>
+                <span class="pill">Community Development</span>
+            </div>
+        </section>
+
+        <!-- "WE ARE" / MISSION SECTION -->
+        <section class="mission-section">
+            <span class="section-label">We are</span>
+            <h2 class="section-heading">Inspiring and Helping for Better Lifestyle</h2>
+            <p class="mission-text">
+                As a local non-governmental organization, we are deeply committed to promoting the social, educational, and economic empowerment of youths and vulnerable children in marginalized communities. Through innovative programs, we strive to break down barriers and create pathways to success.
+                At Rise and Shine, we believe that when young people rise, entire communities thrive. Join us in building a more equitable and inclusive society.
+            </p>
+            <div class="core-aim-box">
+                <p><strong>Our Core Aim:</strong> Promoting a better quality of life for youths and vulnerable children in marginalized communities.</p>
+            </div>
+        </section>
+
+        <!-- VISION & MISSION -->
+        <section class="vision-mission">
+            <span class="section-label">Vision and Mission</span>
+            <h2 class="section-heading">Rise and Shine Empowerment Center</h2>
+            <div class="vm-container">
+                <div class="vm-card">
+                    <h3>Our Vision</h3>
+                    <p>We envision a society where every youth and vulnerable child from marginalized communities has the opportunity to reach their full potential and participate equally in all aspects of life.</p>
+                </div>
+                <div class="vm-card">
+                    <h3>Our Mission</h3>
+                    <p>Our mission is to enhance the educational, social, and economic empowerment of youths and vulnerable children through skills training, safe shelter, and access to technology.</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="chat-container" id="chat-container">
-            <div class="message bot-message">
-                <p>Hello! I'm here to help you track prices and inflation data from Zimbabwean supermarkets and shops.</p>
-                <p>What product would you like to check today?</p>
-                <div class="quick-reply">
-                    <button class="quick-reply-btn" data-product="Cooking Oil">Cooking Oil</button>
-                    <button class="quick-reply-btn" data-product="Sugar">Sugar</button>
-                    <button class="quick-reply-btn" data-product="Maize Meal">Maize Meal</button>
-                    <button class="quick-reply-btn" data-product="Bread">Bread</button>
-                    <button class="quick-reply-btn" data-product="List Products">List Available Products</button>
+        <!-- CORE OBJECTIVES -->
+        <section class="objectives-section">
+            <h2 class="section-heading">Our Core Objectives</h2>
+            <div class="objectives-grid">
+                <div class="obj-card">
+                    <div class="obj-number">I</div>
+                    <h4>Empower Youth Through Skills</h4>
+                    <p>To empower youth in marginalized communities through sports, technical and vocational skills training for sustainable livelihoods.</p>
                 </div>
-                <div class="last-updated">Last updated: Today, 10:45 AM</div>
+                <div class="obj-card">
+                    <div class="obj-number">II</div>
+                    <h4>Enhance Education Access</h4>
+                    <p>To enhance access to quality education and learning resources for vulnerable children in marginalized communities.</p>
+                </div>
+                <div class="obj-card">
+                    <div class="obj-number">III</div>
+                    <h4>Provide Safe Shelter</h4>
+                    <p>To provide safe and secure shelter and care for vulnerable children and youth at risk.</p>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div class="input-area">
-            <input type="text" id="user-input" placeholder="Ask about product prices or inflation data...">
-            <button id="send-btn">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
+        <!-- EXTENDED PROGRAMS -->
+        <section class="programs-section">
+            <h2 class="section-heading">Extended Programs & Skills</h2>
+            <p>Building on our core objectives, we offer advanced programs to equip youth for the future.</p>
+            <div class="programs-grid">
+                <div class="prog-card"><div class="prog-icon"><i class="fas fa-robot"></i></div><h5>AI & Machine Learning</h5><p>Python, R, practical applications.</p></div>
+                <div class="prog-card"><div class="prog-icon"><i class="fas fa-database"></i></div><h5>Data Science</h5><p>Statistics, analysis, visualization.</p></div>
+                <div class="prog-card"><div class="prog-icon"><i class="fas fa-atom"></i></div><h5>Quantum Science Basics</h5><p>Introductory concepts and futures.</p></div>
+                <div class="prog-card"><div class="prog-icon"><i class="fas fa-graduation-cap"></i></div><h5>Academic Support</h5><p>Dissertation & project guidance.</p></div>
+                <div class="prog-card"><div class="prog-icon"><i class="fas fa-clinic-medical"></i></div><h5>Clinical Trials Training</h5><p>Research methodology & ethics.</p></div>
+                <div class="prog-card"><div class="prog-icon"><i class="fas fa-seedling"></i></div><h5>Agri-Tech & Entrepreneurship</h5><p>Sustainable business skills.</p></div>
+            </div>
+        </section>
+
+        <!-- CONTACT & REGISTRATION -->
+        <section class="contact-section">
+            <div class="contact-wrapper">
+                <h2 class="section-heading">Contact & Official Registration</h2>
+                <div class="contact-details">
+                    <div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div><h4>Address</h4><p>Plot 5, Railway 7 Farm<br>Kadoma, Mashonaland West, Zimbabwe</p></div></div>
+                    <div class="contact-item"><div class="contact-icon"><i class="fas fa-phone"></i></div><div><h4>Phone</h4><p>+263 242 456 789<br>+263 772 123 456</p></div></div>
+                    <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><h4>Organization Email</h4><p>info@riseandshine.co.zw<br>registrations@riseandshine.co.zw</p></div></div>
+                </div>
+                <div class="owner-highlight">
+                    <h3><i class="fas fa-user-tie"></i> Contact the Founder & Director</h3>
+                    <p>For strategic partnerships, major donations, or high-level inquiries:</p>
+                    <div class="owner-email">Mr. L. Katova: <strong>leo1katova@gmail.com</strong></div>
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.95rem; opacity: 0.9;"><strong>Official Registration:</strong> CL06692055 | Welfare Organisations Act, 1966 | Notice published in The Herald on 12th December, 2025.</p>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p>&copy; 2025 Rise and Shine Empowerment. "We rise by lifting each other!"</p>
+        </footer>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const chatContainer = document.getElementById('chat-container');
-            const userInput = document.getElementById('user-input');
-            const sendBtn = document.getElementById('send-btn');
-
-            // Data sources (kept for displaying sources)
-            const dataSources = [
-                {name: "ZimStat Consumer Price Index", url: "https://www.zimstat.co.zw/price-statistics/"},
-                {name: "RBZ Inflation Reports", url: "https://www.rbz.co.zw/inflation-reports/"},
-                {name: "Consumer Council of Zimbabwe", url: "https://ccz.org.zw/price-check/"},
-                {name: "TM Supermarket Price List", url: "https://tmsupermarket.co.zw/prices/"},
-                {name: "OK Zimbabwe Latest Catalogue", url: "https://okzimbabwe.co.zw/catalogue/"},
-                {name: "Ministry of Industry and Commerce", url: "https://www.commerce.gov.zw/price-monitoring/"}
-            ];
-
-            // Add message to chat
-            function addMessage(text, isUser = false) {
-                const messageDiv = document.createElement('div');
-                messageDiv.classList.add('message');
-                messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
-                messageDiv.innerHTML = text;
-                chatContainer.appendChild(messageDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-
-            // Show typing indicator
-            function showTypingIndicator() {
-                const typingDiv = document.createElement('div');
-                typingDiv.classList.add('typing-indicator');
-                typingDiv.id = 'typing-indicator';
-                typingDiv.innerHTML = `
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                `;
-                chatContainer.appendChild(typingDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-                return typingDiv;
-            }
-
-            // Remove typing indicator
-            function removeTypingIndicator() {
-                const typingIndicator = document.getElementById('typing-indicator');
-                if (typingIndicator) {
-                    typingIndicator.remove();
-                }
-            }
-
-            // Display a single product result from the database query
-            function displayProductResult(productData, productName) {
-                const productsDiv = document.createElement('div');
-
-                if (productData) {
-                    const productCard = document.createElement('div');
-                    productCard.classList.add('product-card');
-                    // Using a generic icon as we don't have specific image URLs from scraping
-                    const genericIcon = '🛒';
-                    // Assuming productData is [product_name, price, store, timestamp]
-                    const timestamp = new Date(productData[3]).toLocaleString(); // Format timestamp
-
-                    productCard.innerHTML = `
-                        <div class="product-image">${genericIcon}</div>
-                        <div class="product-info">
-                            <div class="product-name">${productData[0]}</div>
-                            <div class="product-store">${productData[2]}</div>
-                            <div class="last-updated">Last updated: ${timestamp}</div>
-                        </div>
-                        <div class="product-price">${productData[1]}</div>
-                    `;
-                    productsDiv.appendChild(productCard);
-                    addMessage(`Here is the latest price I found for "${productName}":`);
-
-                } else {
-                    addMessage(`Sorry, I couldn't find the latest price for "${productName}" in my database.`);
-                    addMessage("Data might be unavailable or the product name might be slightly different.");
-                    addMessage("Would you like to see a list of available products?");
-                     // Add quick reply for listing products
-                    addQuickReplyButton('List Available Products', 'List Products');
-                }
-
-                chatContainer.appendChild(productsDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-
-             // Display a list of product names
-            function displayProductList(productList) {
-                if (productList && productList.length > 0) {
-                    let listHtml = "<p>Here are some products I have data for:</p><ul>";
-                    productList.forEach(product => {
-                         // Create clickable list items for products
-                        listHtml += `<li><button class="quick-reply-btn" data-product="${product}">${product}</button></li>`;
-                    });
-                    listHtml += "</ul><p>Click on a product name to see its price.</p>"; // Instruction to user
-                    addMessage(listHtml);
-
-                     // Add event listeners to the newly added product list buttons
-                    chatContainer.querySelectorAll('.quick-reply-btn').forEach(button => {
-                        // Only add listeners if they haven't been added already (might need refinement for dynamic content)
-                         if (!button.classList.contains('listener-added')) {
-                             button.addEventListener('click', function() {
-                                 userInput.value = this.getAttribute('data-product');
-                                 handleUserMessage();
-                             });
-                             button.classList.add('listener-added'); // Mark as listener added
-                         }
-                     });
-
-                } else {
-                    addMessage("I don't have any product data available right now.");
-                    addMessage("This might be because scraping failed recently, or the database is empty.");
-                }
-            }
-
-
-            // Display data sources
-            function displayDataSources() {
-                const sourcesDiv = document.createElement('div');
-                sourcesDiv.innerHTML = `<p>Here are some reliable sources for price and inflation data in Zimbabwe:</p>`;
-
-                const sourcesList = document.createElement('ul');
-                sourcesList.style.margin = '10px 0 10px 20px';
-
-                dataSources.forEach(source => {
-                    const listItem = document.createElement('li');
-                    listItem.style.marginBottom = '8px';
-                    listItem.innerHTML = `<a href="${source.url}" target="_blank" class="source-link">${source.name}</a>`;
-                    sourcesList.appendChild(listItem);
-                });
-
-                sourcesDiv.appendChild(sourcesList);
-                chatContainer.appendChild(sourcesDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-
-            // Show inflation alert
-            function showInflationAlert() {
-                const alertDiv = document.createElement('div');
-                alertDiv.classList.add('inflation-alert');
-                alertDiv.innerHTML = `
-                    <strong><i class="fas fa-exclamation-triangle"></i> Inflation Alert</strong>
-                    <p>Zimbabwe's annual inflation rate reached 175.8% in June 2023, according to ZimStat.</p>
-                    <p>Food and non-alcoholic beverages inflation stands at 285.0%.</p>
-                `;
-                chatContainer.appendChild(alertDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }
-
-             // Function to add quick reply buttons dynamically
-            function addQuickReplyButton(text, dataValue) {
-                // Find the last message element and add quick replies there
-                const messageElements = chatContainer.querySelectorAll('.message');
-                const lastMessageElement = messageElements[messageElements.length - 1];
-
-                 if (!lastMessageElement) return; // Exit if no message elements found
-
-                 let quickReplyDiv = lastMessageElement.querySelector('.quick-reply');
-                 if (!quickReplyDiv) {
-                     quickReplyDiv = document.createElement('div');
-                     quickReplyDiv.classList.add('quick-reply');
-                     lastMessageElement.appendChild(quickReplyDiv);
-                 }
-
-                const button = document.createElement('button');
-                button.classList.add('quick-reply-btn');
-                button.textContent = text;
-                button.setAttribute('data-product', dataValue); // Use data-product attribute for value
-
-                 // Prevent adding duplicate listeners
-                 if (!button.classList.contains('listener-added')) {
-                     button.addEventListener('click', function() {
-                         userInput.value = this.getAttribute('data-product');
-                         handleUserMessage();
-                     });
-                     button.classList.add('listener-added');
-                 }
-                quickReplyDiv.appendChild(button);
-            }
-
-
-            // Handle user message
-            async function handleUserMessage() { // Made function async to handle kernel invoke
-                const message = userInput.value.trim();
-                if (message === '') return;
-
-                addMessage(message, true);
-                userInput.value = '';
-
-                const typingIndicator = showTypingIndicator();
-
-                const lowerMessage = message.toLowerCase();
-
-                // Simple keyword matching for commands and products
-                let command = null;
-                let productQuery = null;
-
-                if (lowerMessage.includes('list products') || lowerMessage === 'products' || lowerMessage === 'list available products') {
-                    command = 'list_products';
-                } else if (lowerMessage.includes('source') || lowerMessage.includes('where') || lowerMessage.includes('data')) {
-                    command = 'show_sources';
-                } else if (lowerMessage.includes('inflation') || lowerMessage.includes('economic')) {
-                    command = 'show_inflation';
-                } else {
-                    // Assume it's a product query if not a recognized command
-                    // Simple extraction: take the whole message as potential product name
-                    productQuery = message;
-                }
-
-
-                setTimeout(async () => { // Added async here too
-                    removeTypingIndicator();
-
-                    if (command === 'list_products') {
-                         addMessage(`Fetching list of available products...`);
-                         let productList = [];
-                         try {
-                              if (typeof google === 'undefined' || !google.colab || !google.colab.kernel || !google.colab.kernel.invoke_function) {
-                                 throw new Error("Colab kernel functions not available.");
-                              }
-                             const response = await google.colab.kernel.invoke_function('list_all_products', []);
-                              if (response && response.data && response.data.retval !== undefined) {
-                                productList = response.data.retval;
-                              } else {
-                                  console.error("Unexpected response format from kernel invoke (list_all_products):", response);
-                                  addMessage("Error retrieving product list. Please try again later or check if the database has data.");
-                              }
-                         } catch (error) {
-                            console.error("Error invoking Python function (list_all_products):", error);
-                            addMessage("An error occurred while fetching the product list. This might be a connection issue.");
-                         }
-                         displayProductList(productList);
-
-                    } else if (command === 'show_sources') {
-                        addMessage("I can fetch price data from various online sources including supermarket websites, government publications, and economic reports.");
-                        displayDataSources();
-
-                    } else if (command === 'show_inflation') {
-                        addMessage("Current inflation data for Zimbabwe:");
-                        showInflationAlert();
-                        addMessage("I can help you track specific product prices that are contributing to inflation.");
-
-                    } else if (productQuery) { // Handle product queries
-                         addMessage(`Searching for the latest price for "${productQuery}"...`);
-                        let result = null;
-                        try {
-                            // Check if kernel functions are available before calling
-                             if (typeof google === 'undefined' || !google.colab || !google.colab.kernel || !google.colab.kernel.invoke_function) {
-                                 throw new Error("Colab kernel functions not available.");
-                              }
-                            // Call Python function to get price from DB
-                            // Pass the raw product query for the Python function to handle LIKE matching
-                            const response = await google.colab.kernel.invoke_function('get_latest_price', [productQuery]);
-                            // The result is in response.data. The format depends on how the Python function returns data.
-                            // Assuming the Python function returns a simple result value.
-                            // Check the structure based on previous tests: get_latest_price returns a tuple or None.
-                             if (response && response.data && response.data.retval !== undefined) { // Check for undefined explicitly
-                                result = response.data.retval;
-                             } else {
-                                 console.error("Unexpected response format from kernel invoke (get_latest_price):", response);
-                                 addMessage("Error retrieving price data. Please try again later.");
-                             }
-
-                        } catch (error) {
-                            console.error("Error invoking Python function (get_latest_price):", error);
-                            addMessage("An error occurred while fetching price data. This might be a connection issue.");
-                        }
-
-                        displayProductResult(result, productQuery); // Display the result from the database
-
-                    } else {
-                        // Fallback for unrecognized input that wasn't a product query or command
-                         addMessage("I'm not sure I understand that. You can ask about specific products or commands like 'inflation', 'sources', or 'list products'.");
-                    }
-
-                    // Add general quick replies after processing
-                     addQuickReplyButton('Cooking Oil', 'Cooking Oil');
-                     addQuickReplyButton('Sugar', 'Sugar');
-                     addQuickReplyButton('Maize Meal', 'Maize Meal');
-                     addQuickReplyButton('List Available Products', 'List Products');
-
-
-                }, 1000); // Reduced delay slightly
-
-            }
-
-            // Event listeners
-            sendBtn.addEventListener('click', handleUserMessage);
-
-            userInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    handleUserMessage();
-                }
-            });
-
-            // Add event listeners to initial quick reply buttons
-            document.querySelectorAll('.quick-reply-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    userInput.value = this.getAttribute('data-product');
-                    handleUserMessage();
-                });
-            });
-
-            // Show initial inflation alert after a delay
-            setTimeout(() => {
-                showInflationAlert();
-            }, 1000);
-        });
-    </script>
 </body>
 </html>
