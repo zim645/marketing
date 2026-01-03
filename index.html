@@ -5,7 +5,1259 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rise and Shine Empowerment</title>
     <style>
+        :root {<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binga Fish Market & Tourism Hub</title>
+    <style>
         :root {
+            --primary: #1a5276; /* Lake blue */
+            --secondary: #d4ac0d; /* Gold */
+            --accent: #27ae60; /* Green */
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --tonga-brown: #8b4513;
+            --tourism-green: #16a085;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        /* Header */
+        .app-header {
+            background: linear-gradient(to right, var(--primary), var(--tourism-green));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .app-header:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--secondary);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 40px;
+            color: var(--secondary);
+        }
+        
+        .tonga-tag {
+            background: var(--tonga-brown);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        /* Navigation */
+        .user-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab:hover {
+            background: #e9ecef;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--secondary);
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Content Areas */
+        .content-area {
+            display: none;
+            padding: 30px;
+            min-height: 600px;
+        }
+        
+        .content-area.active {
+            display: block;
+        }
+        
+        .page-title {
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Map Container */
+        .map-container {
+            background: #2c3e50;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 25px 0;
+            position: relative;
+            height: 500px;
+        }
+        
+        .map {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, #1a5276, #27ae60);
+            position: relative;
+        }
+        
+        .map-marker {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .map-marker:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            z-index: 100;
+        }
+        
+        .map-marker-info {
+            position: absolute;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 300px;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .map-marker:hover .map-marker-info {
+            display: block;
+        }
+        
+        /* Tourism Cards */
+        .attraction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .attraction-card {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .attraction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .attraction-image {
+            height: 200px;
+            background: linear-gradient(45deg, var(--primary), var(--tourism-green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 60px;
+        }
+        
+        .attraction-details {
+            padding: 20px;
+        }
+        
+        .attraction-name {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        
+        /* Contact Form */
+        .contact-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            background: #219653;
+        }
+        
+        .btn-secondary {
+            background: var(--tourism-green);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #138a72;
+        }
+        
+        /* Fish Cards */
+        .fish-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .fish-card {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .fish-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .fish-image {
+            height: 180px;
+            background: linear-gradient(45deg, #1a5276, #27ae60);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 60px;
+        }
+        
+        /* Dashboard */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .fish-grid, .attraction-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-tabs {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .map-container {
+                height: 400px;
+            }
+        }
+        
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        .chat-button {
+            width: 60px;
+            height: 60px;
+            background: var(--tourism-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .chat-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            display: none;
+        }
+        
+        .chat-header {
+            background: var(--tourism-green);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-messages {
+            height: 300px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+        
+        .message.bot {
+            align-self: flex-start;
+            background: #f0f0f0;
+            padding: 10px 15px;
+            border-radius: 15px 15px 15px 5px;
+        }
+        
+        .message.user {
+            align-self: flex-end;
+            background: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px 15px 5px 15px;
+            margin-left: auto;
+        }
+        
+        .chat-input {
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .chat-input input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+        }
+        
+        /* Weather Widget */
+        .weather-widget {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .temperature {
+            font-size: 48px;
+            font-weight: 700;
+        }
+        
+        /* Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .gallery-item {
+            height: 150px;
+            background: #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <div class="logo">
+                <div class="logo-icon">🐟</div>
+                <div>
+                    <h1>Binga Fish Market & Tourism Hub</h1>
+                    <p>Lake Kariba's Digital Gateway | Fresh Fish & Cultural Experiences</p>
+                </div>
+                <div class="logo-icon">🌴</div>
+            </div>
+            <div class="tonga-tag">Malo kubana mincici | The Home of the Tonga People</div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="user-tabs">
+            <div class="tab active" onclick="switchTab('fisherman')">🎣 Fisherman</div>
+            <div class="tab" onclick="switchTab('buyer')">🛒 Buy Fish</div>
+            <div class="tab" onclick="switchTab('tourism')">🌴 Tourism</div>
+            <div class="tab" onclick="switchTab('manager')">📊 Cooperative</div>
+        </div>
+        
+        <!-- Weather Widget -->
+        <div class="weather-widget" id="weatherWidget">
+            <div>
+                <div style="font-size: 14px; opacity: 0.9;">Binga Weather</div>
+                <div class="temperature">32°C</div>
+                <div style="font-size: 14px;">Sunny, Perfect for Fishing & Tours</div>
+            </div>
+            <div style="font-size: 60px;">☀️</div>
+        </div>
+        
+        <!-- Fisherman Interface -->
+        <div id="fisherman" class="content-area active">
+            <h2 class="page-title">🎣 Fisherman Portal - ChiTonga Version</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="currentPrice">$3.20/kg</div>
+                    <div class="stat-label">Current Kapenta Price</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="pendingPayments">$245</div>
+                    <div class="stat-label">Pending Payments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalCatch">42 kg</div>
+                    <div class="stat-label">Your Catch This Week</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">🌊</div>
+                    <div class="stat-label">Lake Conditions: Calm</div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 30px; margin-top: 30px;">
+                <div style="flex: 1; background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h3>📱 Submit Your Catch</h3>
+                    <div style="margin: 20px 0;">
+                        <label>Fish Type:</label>
+                        <select class="form-control" style="margin-top: 8px;">
+                            <option>Kapenta (Small Fish)</option>
+                            <option>Bream (Tilapia)</option>
+                            <option>Tigerfish</option>
+                            <option>Catfish</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <label>Weight (kg): <span id="weightValue">20</span></label>
+                        <input type="range" class="form-control" min="5" max="100" value="20" 
+                               oninput="document.getElementById('weightValue').textContent = this.value">
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <label>Processing Method:</label>
+                        <div style="display: flex; gap: 10px; margin-top: 8px;">
+                            <button class="btn" style="flex: 1; background: #e8f4fd;">Fresh</button>
+                            <button class="btn" style="flex: 1; background: #fef9e7;">Sun-dried</button>
+                            <button class="btn" style="flex: 1; background: #f4ecf7;">Smoked</button>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="submitCatch()">
+                        🚀 List on Market
+                    </button>
+                </div>
+                
+                <div style="flex: 1;">
+                    <h3>📞 USSD Commands (Dial *134*555#)</h3>
+                    <div style="background: #000; color: #0f0; padding: 20px; border-radius: 10px; margin-top: 15px; font-family: monospace;">
+                        > 1. Lemba inswa (Register fish)<br>
+                        > 2. Linga ndalama (Check money)<br>
+                        > 3. Bona ma odala (See orders)<br>
+                        > 4. Tuma maimbo (Send message)<br>
+                        > 5. Mvula (Weather forecast)
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background: #e8f4fd; border-radius: 10px;">
+                        <h4>📅 Today's Lake Report</h4>
+                        <p>✅ Safe for fishing (light winds)<br>
+                        ✅ Good kapenta schools near Chete Island<br>
+                        ⚠️ Crocodile activity reported near Sibilobilo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Buyer Interface -->
+        <div id="buyer" class="content-area">
+            <h2 class="page-title">🛒 Fresh Fish from Lake Kariba</h2>
+            
+            <div style="background: linear-gradient(to right, #e8f4fd, #f0f8ff); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                <h3>🐟 Direct from Binga Fishermen - No Middlemen!</h3>
+                <p>Every purchase supports Tonga fishing families. 100% traceable to source.</p>
+            </div>
+            
+            <div class="fish-grid">
+                <!-- Fish cards will be generated by JavaScript -->
+            </div>
+            
+            <div style="margin-top: 40px; padding: 25px; background: #f9f9f9; border-radius: 10px;">
+                <h3>🔒 How Our Escrow System Protects You</h3>
+                <div style="display: flex; gap: 20px; margin-top: 20px;">
+                    <div style="flex: 1; text-align: center;">
+                        <div style="font-size: 40px;">1️⃣</div>
+                        <h4>Order & Pay</h4>
+                        <p>Payment held in secure escrow account</p>
+                    </div>
+                    <div style="flex: 1; text-align: center;">
+                        <div style="font-size: 40px;">2️⃣</div>
+                        <h4>Quality Check</h4>
+                        <p>Cooperative verifies quality</p>
+                    </div>
+                    <div style="flex: 1; text-align: center;">
+                        <div style="font-size: 40px;">3️⃣</div>
+                        <h4>Delivery</h4>
+                        <p>Insulated transport to your city</p>
+                    </div>
+                    <div style="flex: 1; text-align: center;">
+                        <div style="font-size: 40px;">4️⃣</div>
+                        <h4>Release Funds</h4>
+                        <p>Payment released after you confirm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tourism Interface -->
+        <div id="tourism" class="content-area">
+            <h2 class="page-title">🌴 Binga Tourism - Discover Lake Kariba</h2>
+            
+            <!-- Interactive Map -->
+            <div class="map-container">
+                <div class="map" id="bingaMap">
+                    <!-- Map markers added via JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Attractions -->
+            <h3 style="margin-top: 40px;">🎪 Top Binga Attractions</h3>
+            <div class="attraction-grid" id="attractionsGrid">
+                <!-- Attraction cards will be generated by JavaScript -->
+            </div>
+            
+            <!-- Photo Gallery -->
+            <h3 style="margin-top: 40px;">📸 Binga Photo Gallery</h3>
+            <div class="gallery" id="gallery">
+                <!-- Gallery items added via JavaScript -->
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="contact-section">
+                <h3>📞 Book a Binga Experience</h3>
+                <p style="margin-bottom: 30px;">Contact us to arrange fishing trips, cultural tours, or accommodation.</p>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" placeholder="you@example.com">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" placeholder="+263 77 123 4567">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Interested In</label>
+                        <select class="form-control">
+                            <option>Fishing Trip</option>
+                            <option>Crocodile Camp Tour</option>
+                            <option>Hot Springs Visit</option>
+                            <option>Cultural Experience</option>
+                            <option>Binga Beach Stay</option>
+                            <option>Multiple Activities</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Dates of Visit</label>
+                    <input type="text" class="form-control" placeholder="e.g., 15-20 March 2024">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Special Requests</label>
+                    <textarea class="form-control" placeholder="Tell us about your interests, group size, etc."></textarea>
+                </div>
+                
+                <button class="btn btn-secondary" style="width: 100%; padding: 15px; font-size: 18px;">
+                    🌴 Send Tour Inquiry
+                </button>
+                
+                <div style="margin-top: 30px; text-align: center; color: #666;">
+                    <p>📧 Email: tours@bingahub.com | 📞 Phone: +263 78 456 7890</p>
+                    <p>Response within 24 hours. Local Tonga guides available.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cooperative Manager Interface -->
+        <div id="manager" class="content-area">
+            <h2 class="page-title">📊 Binga Cooperative Dashboard</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">127</div>
+                    <div class="stat-label">Active Fishermen</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">842 kg</div>
+                    <div class="stat-label">Fish This Week</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$2,548</div>
+                    <div class="stat-label">Transactions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">15</div>
+                    <div class="stat-label">Tour Bookings</div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 30px; margin-top: 40px;">
+                <div style="flex: 1;">
+                    <h3>📋 Pending Catches</h3>
+                    <div style="margin-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; padding: 15px; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px;">
+                            <span>John Siachilaba - 25kg Kapenta</span>
+                            <button style="background: #27ae60; color: white; border: none; padding: 5px 15px; border-radius: 4px;">Verify</button>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 15px; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px;">
+                            <span>Mary Kariyangwe - 8kg Bream</span>
+                            <button style="background: #27ae60; color: white; border: none; padding: 5px 15px; border-radius: 4px;">Verify</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="flex: 1;">
+                    <h3>📦 Recent Orders</h3>
+                    <div style="margin-top: 20px;">
+                        <div style="padding: 15px; background: #e8f4fd; border-radius: 8px; margin-bottom: 10px;">
+                            <strong>ORD-2024-015</strong><br>
+                            40kg Kapenta to Harare<br>
+                            <span style="color: #27ae60;">In transit - ETA tomorrow</span>
+                        </div>
+                        <div style="padding: 15px; background: #fef9e7; border-radius: 8px; margin-bottom: 10px;">
+                            <strong>TOUR-2024-008</strong><br>
+                            Crocodile Camp Tour for 4<br>
+                            <span style="color: #d4ac0d;">Scheduled: Mar 15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px; padding: 25px; background: #f0f8ff; border-radius: 10px;">
+                <h3>📈 Combined Revenue (Fish + Tourism)</h3>
+                <div style="display: flex; height: 200px; align-items: flex-end; gap: 20px; margin-top: 20px;">
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                        <div style="height: 150px; width: 40px; background: linear-gradient(to top, #27ae60 70%, #eee 0); border-radius: 4px;"></div>
+                        <div style="margin-top: 10px;">Jan</div>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                        <div style="height: 180px; width: 40px; background: linear-gradient(to top, #27ae60 85%, #eee 0); border-radius: 4px;"></div>
+                        <div style="margin-top: 10px;">Feb</div>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                        <div style="height: 220px; width: 40px; background: linear-gradient(to top, #27ae60 100%, #eee 0); border-radius: 4px;"></div>
+                        <div style="margin-top: 10px;">Mar</div>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                        <div style="height: 120px; width: 40px; background: linear-gradient(to top, #16a085 60%, #eee 0); border-radius: 4px;"></div>
+                        <div style="margin-top: 10px;">Tourism</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal for Gallery -->
+        <div class="modal" id="galleryModal" onclick="closeModal()">
+            <img class="modal-content" id="modalImage" src="">
+        </div>
+    </div>
+    
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <div class="chat-button" onclick="toggleChat()">💬</div>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h4>Binga Tourism Assistant</h4>
+                <span onclick="toggleChat()" style="cursor: pointer;">✕</span>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    Hello! I'm your Binga assistant. Ask me about fishing, tours, or local attractions!
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your question..." id="chatInput" onkeypress="handleChatInput(event)">
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Sample data
+        const sampleFish = [
+            {
+                id: 1,
+                name: "Fresh Kapenta (Small Fish)",
+                type: "kapenta",
+                price: 3.20,
+                weight: 25,
+                fisherman: "John Siachilaba",
+                cooperative: "Siachilaba Fishing Co-op",
+                freshness: "Caught this morning",
+                location: "Near Chete Island",
+                description: "Sun-dried overnight, perfect for relish. Direct from Lake Kariba."
+            },
+            {
+                id: 2,
+                name: "Lake Bream (Tilapia)",
+                type: "bream",
+                price: 5.50,
+                weight: 8,
+                fisherman: "Mary Kariyangwe",
+                cooperative: "Kariyangwe Women's Co-op",
+                freshness: "Fresh today",
+                location: "Binga Bay",
+                description: "2-3kg each, perfect for grilling. Cleaned and ready to cook."
+            },
+            {
+                id: 3,
+                name: "Tigerfish Fillets",
+                type: "tigerfish",
+                price: 8.75,
+                weight: 12,
+                fisherman: "David Binga",
+                cooperative: "Binga Central Co-op",
+                freshness: "Smoked traditionally",
+                location: "Sibilobilo Area",
+                description: "Smoked using traditional Tonga methods. Ready to eat or cook."
+            },
+            {
+                id: 4,
+                name: "Dry Kapenta (Large Batch)",
+                type: "kapenta",
+                price: 4.10,
+                weight: 40,
+                fisherman: "Grace Chete",
+                cooperative: "Chete Island Co-op",
+                freshness: "Sun-dried 3 days",
+                location: "Chete Island",
+                description: "Fully sun-dried, 6-month shelf life. Great for restaurants."
+            }
+        ];
+        
+        const attractions = [
+            {
+                id: 1,
+                name: "Crocodile Camp",
+                icon: "🐊",
+                description: "See Nile crocodiles in their natural habitat. Guided tours available with local experts who explain crocodile behavior and Tonga folklore about these ancient creatures.",
+                location: {x: 30, y: 40},
+                features: ["Guided tours", "Safety viewing platforms", "Photography spots", "Local guides"],
+                price: "$15 per person"
+            },
+            {
+                id: 2,
+                name: "Binga Hot Springs",
+                icon: "♨️",
+                description: "Natural thermal springs with healing properties. The local Tonga people believe these waters have spiritual significance and healing powers.",
+                location: {x: 60, y: 30},
+                features: ["Natural pools", "Changing facilities", "Local massage", "Picnic area"],
+                price: "$5 entry"
+            },
+            {
+                id: 3,
+                name: "Binga Beach",
+                icon: "🏖️",
+                description: "Pristine sandy beach on Lake Kariba. Perfect for swimming, sunset views, and traditional Tonga fishing demonstrations.",
+                location: {x: 40, y: 60},
+                features: ["Swimming area", "Beach chairs", "Local food stalls", "Boat rentals"],
+                price: "Free entry"
+            },
+            {
+                id: 4,
+                name: "Lake View Point",
+                icon: "🌅",
+                description: "Panoramic views of Lake Kariba and surrounding islands. Best spot for sunset photography and bird watching.",
+                location: {x: 70, y: 50},
+                features: ["Observation deck", "Binocular rentals", "Photography spots", "Guided bird watching"],
+                price: "$3 entry"
+            },
+            {
+                id: 5,
+                name: "Tonga Cultural Village",
+                icon: "🎭",
+                description: "Experience authentic Tonga culture, traditional dances, crafts, and storytelling. Learn about the rich history of the Tonga people displaced by Lake Kariba's creation.",
+                location: {x: 50, y: 20},
+                features: ["Cultural shows", "Craft workshops", "Traditional meals", "Storytelling"],
+                price: "$20 including meal"
+            },
+            {
+                id: 6,
+                name: "Chete Island Safari",
+                icon: "🚤",
+                description: "Boat trip to Chete Island for wildlife viewing. See elephants, antelope, and diverse bird species in their natural island habitat.",
+                location: {x: 20, y: 70},
+                features: ["Boat transport", "Guide included", "Snacks provided", "Wildlife viewing"],
+                price: "$50 per person"
+            }
+        ];
+        
+        const galleryImages = [
+            {id: 1, name: "Fishermen at sunrise", emoji: "🌅"},
+            {id: 2, name: "Traditional basket weaving", emoji: "🧺"},
+            {id: 3, name: "Crocodile in water", emoji: "🐊"},
+            {id: 4, name: "Hot springs steam", emoji: "♨️"},
+            {id: 5, name: "Binga beach sunset", emoji: "🏖️"},
+            {id: 6, name: "Tonga dancers", emoji: "💃"},
+            {id: 7, name: "Fresh kapenta catch", emoji: "🐟"},
+            {id: 8, name: "Lake Kariba view", emoji: "🌊"}
+        ];
+        
+        // Initialize the app
+        function initApp() {
+            renderFishMarket();
+            renderAttractions();
+            renderGallery();
+            setupMap();
+            
+            // Set initial weather
+            updateWeather();
+        }
+        
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Update active tab
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.content-area').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Activate selected tab
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+            
+            // Refresh map when tourism tab is opened
+            if (tabName === 'tourism') {
+                setTimeout(setupMap, 100);
+            }
+        }
+        
+        // Setup interactive map
+        function setupMap() {
+            const map = document.getElementById('bingaMap');
+            map.innerHTML = '';
+            
+            attractions.forEach(attraction => {
+                const marker = document.createElement('div');
+                marker.className = 'map-marker';
+                marker.style.left = `${attraction.location.x}%`;
+                marker.style.top = `${attraction.location.y}%`;
+                marker.innerHTML = `
+                    ${attraction.icon}
+                    <div class="map-marker-info">
+                        <strong>${attraction.name}</strong><br>
+                        ${attraction.description.substring(0, 100)}...<br>
+                        <small>${attraction.price}</small><br>
+                        <button onclick="bookAttraction(${attraction.id})" style="margin-top: 10px; background: var(--tourism-green); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">
+                            Book Tour
+                        </button>
+                    </div>
+                `;
+                map.appendChild(marker);
+            });
+            
+            // Add lake label
+            const lakeLabel = document.createElement('div');
+            lakeLabel.style.position = 'absolute';
+            lakeLabel.style.left = '50%';
+            lakeLabel.style.top = '70%';
+            lakeLabel.style.transform = 'translate(-50%, -50%)';
+            lakeLabel.style.color = 'white';
+            lakeLabel.style.fontSize = '20px';
+            lakeLabel.style.fontWeight = 'bold';
+            lakeLabel.style.textShadow = '2px 2px 4px rgba(0,0,0,0.5)';
+            lakeLabel.innerHTML = 'LAKE KARIBA';
+            map.appendChild(lakeLabel);
+        }
+        
+        // Render fish market for buyers
+        function renderFishMarket() {
+            const container = document.querySelector('.fish-grid');
+            container.innerHTML = '';
+            
+            sampleFish.forEach(fish => {
+                const card = document.createElement('div');
+                card.className = 'fish-card';
+                card.innerHTML = `
+                    <div class="fish-image">
+                        ${fish.type === 'kapenta' ? '🐟🐟🐟' : fish.type === 'bream' ? '🐠' : '🎣'}
+                    </div>
+                    <div class="attraction-details">
+                        <div class="attraction-name">${fish.name}</div>
+                        <div style="color: #666; font-size: 14px; margin-bottom: 10px;">
+                            Fisherman: ${fish.fisherman}<br>
+                            Location: ${fish.location}
+                        </div>
+                        <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin: 10px 0;">
+                            $${fish.price.toFixed(2)}/kg
+                        </div>
+                        <div style="margin: 10px 0;">
+                            <span style="background: #e8f4fd; padding: 5px 12px; border-radius: 20px; font-size: 12px;">
+                                ${fish.weight}kg available
+                            </span>
+                            <span style="background: #fff3cd; padding: 5px 12px; border-radius: 20px; font-size: 12px; margin-left: 5px;">
+                                ${fish.freshness}
+                            </span>
+                        </div>
+                        <p style="color: #666; font-size: 14px; margin: 10px 0;">${fish.description}</p>
+                        <button class="btn btn-primary" onclick="buyFish(${fish.id})">
+                            🛒 Buy Now
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // Render attractions
+        function renderAttractions() {
+            const container = document.getElementById('attractionsGrid');
+            container.innerHTML = '';
+            
+            attractions.forEach(attraction => {
+                const card = document.createElement('div');
+                card.className = 'attraction-card';
+                card.innerHTML = `
+                    <div class="attraction-image">
+                        ${attraction.icon}
+                    </div>
+                    <div class="attraction-details">
+                        <div class="attraction-name">${attraction.name}</div>
+                        <p style="color: #666; margin: 10px 0; min-height: 80px;">${attraction.description}</p>
+                        <div style="margin: 15px 0;">
+                            ${attraction.features.map(feature => 
+                                `<span style="display: inline-block; background: #e8f4fd; padding: 3px 10px; border-radius: 15px; font-size: 12px; margin-right: 5px; margin-bottom: 5px;">${feature}</span>`
+                            ).join('')}
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                            <span style="font-weight: bold; color: var(--tourism-green);">${attraction.price}</span>
+                            <button class="btn" style="background: var(--tourism-green); color: white;" onclick="bookAttraction(${attraction.id})">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // Render gallery
+        function renderGallery() {
+            const container = document.getElementById('gallery');
+            container.innerHTML = '';
+            
+            galleryImages.forEach(image => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.style.background = `linear-gradient(45deg, var(--primary), var(--tourism-green))`;
+                item.style.display = 'flex';
+                item.style.alignItems = 'center';
+                item.style.justifyContent = 'center';
+                item.style.fontSize = '50px';
+                item.innerHTML = image.emoji;
+                item.onclick = () => openGalleryImage(image.id);
+                container.appendChild(item);
+            });
+        }
+        
+        // Update weather
+        function updateWeather() {
+            const temps = [28, 29, 30, 31, 32, 33, 34];
+            const conditions = ['☀️', '⛅', '🌤️', '☀️', '🌡️'];
+            const randomTemp = temps[Math.floor(Math.random() * temps.length)];
+            const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
+            
+            document.querySelector('.temperature').textContent = `${randomTemp}°C`;
+            document.querySelector('.weather-widget div:nth-child(2)').innerHTML = randomCondition;
+        }
+        
+        // Buy fish
+        function buyFish(fishId) {
+            const fish = sampleFish.find(f => f.id === fishId);
+            alert(`Order placed for ${fish.name}!\n\nPrice: $${fish.price.toFixed(2)}/kg\nTotal: $${(fish.price * fish.weight).toFixed(2)}\n\nPayment held in escrow. Delivery in 2-3 days.`);
+        }
+        
+        // Book attraction
+        function bookAttraction(attractionId) {
+            const attraction = attractions.find(a => a.id === attractionId);
+            alert(`Booking request sent for ${attraction.name}!\n\nPrice: ${attraction.price}\n\nOur team will contact you within 24 hours to confirm details.`);
+        }
+        
+        // Submit catch
+        function submitCatch() {
+            alert('Catch submitted successfully!\n\nYour fish has been listed on the market. You will receive an SMS when sold. Payment available at EcoCash agents.');
+            
+            // Update stats
+            const catchElement = document.getElementById('totalCatch');
+            const current = parseInt(catchElement.textContent);
+            catchElement.textContent = `${current + 20} kg`;
+        }
+        
+        // Gallery functions
+        function openGalleryImage(imageId) {
+            const modal = document.getElementById('galleryModal');
+            const modalImg = document.getElementById('modalImage');
+            const image = galleryImages.find(img => img.id === imageId);
+            
+            modalImg.src = ''; // In real app, would be actual image URL
+            modalImg.alt = image.name;
+            modal.style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('galleryModal').style.display = 'none';
+        }
+        
+        // Chat functions
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function handleChatInput(event) {
+            if (event.key === 'Enter') {
+                const input = document.getElementById('chatInput');
+                const message = input.value.trim();
+                
+                if (message) {
+                    // Add user message
+                    addChatMessage(message, 'user');
+                    
+                    // Generate bot response
+                    setTimeout(() => {
+                        generateBotResponse(message);
+                    }, 500);
+                    
+                    input.value = '';
+                }
+            }
+        }
+        
+        function addChatMessage(text, sender) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = text;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+        
+        function generateBotResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            let response = "";
+            
+            if (lowerMessage.includes('fish') || lowerMessage.includes('kapenta')) {
+                response = "Fresh kapenta is available at $3.20/kg. We can arrange fishing trips with local fishermen!";
+            } else if (lowerMessage.includes('tour') || lowerMessage.includes('visit')) {
+                response = "We offer tours to Crocodile Camp, Hot Springs, Binga Beach, and cultural villages. Would you like more details about a specific attraction?";
+            } else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
+                response = "Prices vary: Crocodile Camp $15, Hot Springs $5, Cultural Village $20 with meal. Fishing trips start at $50 per person.";
+            } else if (lowerMessage.includes('contact') || lowerMessage.includes('phone')) {
+                response = "Call +263 78 456 7890 or email tours@bingahub.com. We respond within 24 hours!";
+            } else if (lowerMessage.includes('weather') || lowerMessage.includes('temperature')) {
+                response = "Binga is warm year-round! Current temperature is 32°C, perfect for fishing and tours.";
+            } else if (lowerMessage.includes('accommodation') || lowerMessage.includes('hotel')) {
+                response = "We partner with local lodges and homestays. Options range from $30-$100 per night. Would you like recommendations?";
+            } else {
+                response = "I can help you with fishing, tours, prices, or accommodation in Binga. What would you like to know?";
+            }
+            
+            addChatMessage(response, 'bot');
+        }
+        
+        // Initialize when page loads
+        window.onload = initApp;
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('galleryModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        // Auto-update weather every minute
+        setInterval(updateWeather, 60000);
+    </script>
+</body>
+</html>
             --primary-color: #1a365d; /* Deep blue */
             --secondary-color: #2b6cb0; /* Medium blue */
             --accent-color: #e53e3e;   /* Red for highlights */
